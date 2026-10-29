@@ -1,4 +1,4 @@
-"""Fig. 7 статті: діагнози негативних результатів.
+"""Fig. 8 статті: діагнози негативних результатів.
 (a) ефект Нордтведта (155): інерційна маса вихору у власній ямі глибини K, m_I/m = (a/g)₀/(a/g)_K з ff155 (r155), проти ⟨1/N³⟩ (числа журналу (155)).
 (b) 3D (170): найбільші пласкі острівці 3D (r170/ana170.json: розмір, середнє ψ) проти пласких ділянок 2D v1 перед народженням і без нього (r173 sel113)."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
@@ -19,4 +19,4 @@ for d in json.load(open(S + "r170/ana170.json")):
     a.plot(d["top"][0], d["psi_big"], "s", color="#c4572e", ms=7, mec="k", mew=0.4)
 a.plot([], [], "s", color="#c4572e", label="3D, largest island (L16, L24)")
 a.set(xscale="log", xlabel="island size (nodes)", ylabel="mean ψ in island", title="3D islands do not raise ψ (2D: lattice arrows; 3D: τ arrows)"); a.legend(fontsize=7, loc="lower right")
-plt.tight_layout(); save(fig, "fig7_diagnosis"); print(mI)
+plt.tight_layout(); save(fig, "fig8_diagnosis"); print(mI)

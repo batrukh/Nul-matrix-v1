@@ -35,8 +35,9 @@ Scripts in `runs/` (see `runs/README.md`). Reference parameters of model v1: L =
 | Sec. 4.4, Fig. 5 | Φ★ only in domains, confinement 42–55 % | `runs/light.sh 1 1` | `src/ph145.py <..._g91.npz> 0.02` | 26 min + 10 min |
 | Sec. 4.4 | dispersion ω = ck[1 − (ka)²/96] | — | `src/disp124.py 24` | — |
 | Sec. 4.5, Fig. 6 | vortices, planted lifetime 0–14 | `runs/matter.sh 1.5 1`, `runs/matter.sh 1.5 1 100` | `src/ana174.py`, `life174.py`, `wall174.py` | 60 min |
-| Sec. 5.1, Fig. 7a | Nordtvedt effect | — | `src/ff155.py K 0.006`, K = 0, 1, 4, 8 | — |
-| Sec. 5.2, Fig. 7b | 3D islands | `src/rg4ck.py` (3D, tetrahedral) | `src/ana170.py` | ≈ 4 h per seed (L = 24) |
+| Sec. 4.6, Fig. 7 | hole seeds a domain: R ≥ 8, q ≥ 0.3; first domain at the hole 3/3 | `runs/hole.sh 48 4.5 SEED R Q` (R = 2–12, Q = 0.05–0.9), `runs/hole.sh 72 3.5 SEED 8 0.6` | `src/ana177.py runs/out/hole_L48` | ≈ 40 min (66 runs) |
+| Sec. 5.1, Fig. 8a | Nordtvedt effect | — | `src/ff155.py K 0.006`, K = 0, 1, 4, 8 | — |
+| Sec. 5.2, Fig. 8b | 3D islands | `src/rg4ck.py` (3D, tetrahedral) | `src/ana170.py` | ≈ 4 h per seed (L = 24) |
 
 ## Licence
 
