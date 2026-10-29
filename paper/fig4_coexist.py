@@ -6,7 +6,7 @@
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import sys, json, ast, numpy as np; sys.path.insert(0, _H); from pstyle import *
 def load(fn): s = open(fn).read(); i = s.index('{'); return ast.literal_eval(s[i:s.rindex('}') + 1])
-fig, ax = plt.subplots(1, 4, figsize=(15, 3.6))
+fig, ax = plt.subplots(2, 2, figsize=(11, 7.6)); ax = ax.ravel()
 a = ax[0]; tag(a, "a")
 for sd, ls in ((3, "-"), (4, "--")):
     w = json.load(open(S + f"r69/lc_s03.5_n100_L96_s{sd}_sk4l0.json"))["w2"]; a.plot([q["t"] for q in w], [q["nuc"] for q in w], color=NOEL, ls=ls, lw=1.2)
