@@ -1,0 +1,6 @@
+base born 65 AUCsize 0.972 min 73 p5 177.0 med 1255.0 AUCpsi 0.96
+h25 born 66 AUCsize 0.939 min 58 p5 63.75 med 148.0 AUCpsi 0.97
+h30 born 70 AUCsize 0.952 min 47 p5 111.25 med 293.5 AUCpsi 0.96
+h45 born 63 AUCsize 0.982 min 199 p5 235.1 med 3006.0 AUCpsi 0.96
+pm born 113 AUCsize 0.973 min 65 p5 199.4 med 1203.0 AUCpsi 0.94
+pp born 37 AUCsize 0.984 min 84 p5 203.6 med 2530.0 AUCpsi 0.97
