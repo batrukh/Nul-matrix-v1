@@ -12,3 +12,4 @@ Single-threaded per run; use `xargs -P <cores>` for several seeds.
 | `dt.sh SEED` | Sec. 3 | as `birth.sh` with dt = 0.0025, no snapshots (175) |
 | `window.sh ARGS` | Sec. 4.1, Fig. 2 | budget scan without elasticity (130): `sk=4 ln=0 seed=1 s0=3.0` … |
 | `sizeL.sh ARGS` | Sec. 4.3, Fig. 4 | v1 at L = 48–144, T = 250 (69 / 143) |
+| `spectrum.sh [STATE ...]` | Sec. 4.4 | gauge spectrum in the Matrix: Φ = 0 plane waves for three generators and weights 1 / 0.02, then the local mass m² = (2/3)\|[G,Φ]\|²/(k_a w) on saved states (180) |
