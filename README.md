@@ -36,6 +36,7 @@ Scripts in `runs/` (see `runs/README.md`). Reference parameters of model v1: L =
 | Sec. 4.4 | dispersion ω = ck[1 − (ka)²/96] | — | `src/disp124.py 24` | — |
 | Sec. 4.5, Fig. 6 | vortices, planted lifetime 0–14 | `runs/matter.sh 1.5 1`, `runs/matter.sh 1.5 1 100` | `src/ana174.py`, `life174.py`, `wall174.py` | 60 min |
 | Sec. 4.6, Fig. 7 | hole seeds a domain: R ≥ 8, q ≥ 0.3; first domain at the hole 3/3 | `runs/hole.sh 48 4.5 SEED R Q` (R = 2–12, Q = 0.05–0.9), `runs/hole.sh 72 3.5 SEED 8 0.6` | `src/ana177.py runs/out/hole_L48` | ≈ 40 min (66 runs) |
+| Sec. 4.3, Fig. 4 (Statistics) | window on 7–8 seeds; arrest vs P in v1 seed-dependent (0.3–0.6); merging is not Ostwald ripening | `runs/stats.sh TAG L S0 SEED GAMMA TT` (44 runs, header of the script) | `paper/fig9_stats.py` (data in `data/r178`) | ≈ 75 min on 4 cores |
 | Sec. 5.1, Fig. 8a | Nordtvedt effect | — | `src/ff155.py K 0.006`, K = 0, 1, 4, 8 | — |
 | Sec. 5.2, Fig. 8b | 3D islands | `src/rg4ck.py` (3D, tetrahedral) | `src/ana170.py` | ≈ 4 h per seed (L = 24) |
 
