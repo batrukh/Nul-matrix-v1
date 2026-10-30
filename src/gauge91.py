@@ -9,7 +9,7 @@ import numpy as np, json, sys
 from phi90 import sym0, dV, vacuum, coords, tdist
 
 DIRS = [(1, 0), (0, 1), (-1, 1)]
-OWN = None                                                         # (145): маска світу, де стартує хвиля (необов'язково)
+OWN = None; PARTIAL = None                                                         # (145): маска світу, де стартує хвиля (необов'язково)
 I5 = np.eye(5)
 T_ = lambda A: np.swapaxes(A, -1, -2)
 PA = lambda X: 0.5*(X - T_(X))
@@ -127,6 +127,7 @@ def run(src="", L=48, aw=-1.0, am=1.0, mode="world", var="all", floor=0.02, kind
                             reach_w=float(r[hot & inw].max()) if (hot & inw).any() else 0.0,
                             reach_m=float(r[hot & ~inw].max()) if (hot & ~inw).any() else 0.0))
             if OWN is not None: rec[-1]["fown"] = float(e[OWN].sum()/e.sum())     # (145): частка у власному світі (без сусідніх світів)
+            if PARTIAL and min(t % 10, 10 - t % 10) < dt/2: json.dump([dict(t=q["t"], fin=q["fin"], fown=q.get("fown"), tot=q["tot"]) for q in rec], open(PARTIAL, "w"))   # (182): проміжний запис довгих прогонів
     dE = float((g.edens(PB, PiB, UB, EB).sum() - e0B)/max(abs(e0B - e0A), 1e-30))
     name = f"gauge91_{('src_' + src.split('/')[-1][6:-4]) if src else 'uni' + mode}_{var}_{kind}_ka{ka:g}_kb{kb:g}" + (f"_f{floor:g}" if var == "world" else "")
     json.dump(dict(rec=rec, drift=dE), open(name + ".json", "w"))

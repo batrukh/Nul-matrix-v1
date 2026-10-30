@@ -1,0 +1,5 @@
+lc_s03.5_n100_L96_s2_sk4l0_pf1_photon_f0.02 size 178 depth 3.2 fin 0.278 fown 0.072 drift -3.6e-04
+lc_s03.5_n100_L96_s1_sk4l0_pf0.3_photon_f0.02 size 218 depth 5.0 fin 0.244 fown 0.055 drift -3.4e-04
+lc_s03.5_n100_L96_s1_sk4l0_pf1_photon_f0.005 size 222 depth 5.0 fin 0.390 fown 0.128 drift -7.0e-04
+lc_s03.5_n100_L96_s1_sk4l0_pf1_photon_f0.02 size 222 depth 5.0 fin 0.306 fown 0.043 drift -3.6e-04
+ALLDONE
