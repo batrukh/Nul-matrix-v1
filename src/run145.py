@@ -8,6 +8,7 @@ for a in sys.argv[1:]:
     k, v = a.split("=")
     if k == "eg": E.GAM = float(v)
     elif k == "el": E.ELL = float(v)
+    elif k == "rs": kw[k] = v                                              # (183): старт зі стану
     else: kw[k] = int(v) if k in ("L", "n", "seed", "sk", "ln", "snp", "iso", "pseed", "gz", "gk", "gd", "sn") else float(v)
 d = E.M.run(**kw); d["eg"], d["el"] = E.GAM, E.ELL
 json.dump(d, open(d["name"] + f"_eg{E.GAM:g}.json", "w"))

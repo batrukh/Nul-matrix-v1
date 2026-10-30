@@ -15,3 +15,4 @@ Single-threaded per run; use `xargs -P <cores>` for several seeds.
 | `spectrum.sh [STATE ...]` | Sec. 4.4 | gauge spectrum in the Matrix: Φ = 0 plane waves for three generators and weights 1 / 0.02, then the local mass m² = (2/3)\|[G,Φ]\|²/(k_a w) on saved states (180) |
 | `boundary.sh FLOOR K DELTA` | Sec. 4.4 | a photon packet hits a straight domain boundary at normal incidence; transmitted fraction vs 4w/(1+w)² (181) |
 | `leak.sh STATE FLOOR [T]` | Sec. 4.4 | the photon packet of `light.sh` followed to T = 300: energy in the launching domain and in all domains vs time (182) |
+| `island.sh` | Sec. 4.2 | intervention in coherent islands: 3 time units before each of 40 nucleations, link phases in a disk R = 6 randomised / noised (0.5 rad) / randomised elsewhere; was the domain born at its site within 15 units (183) |

@@ -49,7 +49,7 @@ def vortex_dtheta(f, L, cores, M=3):
                 out += q*((d_ + np.pi) % (2*np.pi) - np.pi)
     return out
 
-def run(L=48, ln=46, s0=4.0, n=10, Tt=400.0, seed=1, h=0.3, dt=0.005, lc=1.3, tc=1.0, cont=0.0, k=1, ell=0.0, D=0.0, g=0.0, rnd=0.0, gseed=0, ac=1.0, cut=0, h13=0.0, h48=0.0, ph=0, vort=0, ga=999.0, iso=0, sm=0.0, mi=0.0, Tk=0.0, pf=0.0, pg=0.2, beta=1.5, eps0=3.0, kappa=1.0, pe=0.0, pseed=0, gz=0, gv=0.0, gfl=0.02, sn=0, gk=5, gd=0, pb=0.0, sk=0, snp=0, nz=0.01, pnz=0.01, jin=0.0, kb=0.0, kl=0, ck=0, ckdir='', pR=0.0, pq=0.0):
+def run(L=48, ln=46, s0=4.0, n=10, Tt=400.0, seed=1, h=0.3, dt=0.005, lc=1.3, tc=1.0, cont=0.0, k=1, ell=0.0, D=0.0, g=0.0, rnd=0.0, gseed=0, ac=1.0, cut=0, h13=0.0, h48=0.0, ph=0, vort=0, ga=999.0, iso=0, sm=0.0, mi=0.0, Tk=0.0, pf=0.0, pg=0.2, beta=1.5, eps0=3.0, kappa=1.0, pe=0.0, pseed=0, gz=0, gv=0.0, gfl=0.02, sn=0, gk=5, gd=0, pb=0.0, sk=0, snp=0, nz=0.01, pnz=0.01, jin=0.0, kb=0.0, kl=0, ck=0, ckdir='', pR=0.0, pq=0.0, rs=''):
     rng = np.random.default_rng(seed); r_ = np.roots([1, 0, -1, -h]); psiM = r_[np.isreal(r_)].real.min()
     s = LocR(L=L, gseed=gseed, jit=rnd, h=h, lc=lc) if rnd else Loc(L=L, h=h, lc=lc, ac=ac, beta=beta, eps0=eps0, kappa=kappa); f = s.fab
     if ell:                                             # № 42: стріли з випадкового плавного τ (як tau52), без швів від руки
@@ -115,7 +115,7 @@ def run(L=48, ln=46, s0=4.0, n=10, Tt=400.0, seed=1, h=0.3, dt=0.005, lc=1.3, tc
     if sm: z = np.where(bad, np.conj(z), z)              # (82): та сама реалізація, що з бінарною стрілою (z записано у відліковому напрямку нитки)
     s.S0 = float((np.abs(z)**2).sum()); s.m0 = s.S0/f.m
     t = 0.0; i = 0; w2 = []; prev = None; spl = []
-    name = f"lc_s0{s0:g}_n{n}_L{L}_s{seed}" + (f"_k{k}" if k > 1 else "") + (f"_tau{ell:g}" if ell else "") + (f"_D{D:g}" if D else "") + (f"_g{g:g}" if g else "") + (f"_rnd{rnd:g}g{gseed}" if rnd else "") + (f"_ac{ac:g}" if ac != 1.0 else "") + (f"_v{vort}g{g:g}" if vort else "") + (f"_ga{ga:g}" if ga != 999.0 else "") + ("_iso" if iso else "") + (f"_sm{sm:g}" if sm else "") + (f"_sk{sk}l{ln}" if sk else "") + (f"_nz{nz:g}" if nz != 0.01 else "") + (f"_pnz{pnz:g}" if pnz != 0.01 else "") + (f"_fb{jin:g}k{kb:g}" if kb else "") + ("_kl" if kl else "") + (f"_pR{pR:g}q{pq:g}" if pR else "")
+    name = f"lc_s0{s0:g}_n{n}_L{L}_s{seed}" + (f"_k{k}" if k > 1 else "") + (f"_tau{ell:g}" if ell else "") + (f"_D{D:g}" if D else "") + (f"_g{g:g}" if g else "") + (f"_rnd{rnd:g}g{gseed}" if rnd else "") + (f"_ac{ac:g}" if ac != 1.0 else "") + (f"_v{vort}g{g:g}" if vort else "") + (f"_ga{ga:g}" if ga != 999.0 else "") + ("_iso" if iso else "") + (f"_sm{sm:g}" if sm else "") + (f"_sk{sk}l{ln}" if sk else "") + (f"_nz{nz:g}" if nz != 0.01 else "") + (f"_pnz{pnz:g}" if pnz != 0.01 else "") + (f"_fb{jin:g}k{kb:g}" if kb else "") + ("_kl" if kl else "") + (f"_pR{pR:g}q{pq:g}" if pR else "") + (("_rs" + os.path.basename(rs)[:-4]) if rs else "")
     assert not (cont and sm)
     ST = int(round(1.0/dt))                                               # (85): запис і крок τ — раз на одиницю часу при будь-якому dt (dt = 0,005 → 200, як раніше)
     name += (f"_b{beta:g}" if beta != 1.5 else "") + (f"_e{eps0:g}" if eps0 != 3.0 else "") + (f"_kp{kappa:g}" if kappa != 1.0 else "") + (f"_h{h:g}" if h != 0.3 else "") + (f"_lc{lc:g}" if lc != 1.3 else "")   # № 67: чутливість до сталих
@@ -208,6 +208,8 @@ def run(L=48, ln=46, s0=4.0, n=10, Tt=400.0, seed=1, h=0.3, dt=0.005, lc=1.3, tc
         if pf and gz: GF, gtrack, gplant = C["GF"], C["gtrack"], C["gplant"]; Phi = GF.P
         elif pf: Phi, Vphi = C["Phi"], C["Vphi"]
         print("resume", t, flush=True)
+    if rs and not (ckf and os.path.exists(ckf)):                # (183): старт із готового стану (z, ψ, t) — втручання в острів робиться заздалегідь у файлі
+        R_ = np.load(rs); z = R_["z"].astype(complex); psi = R_["psi"].astype(float); t = float(R_["t"]); i = int(round(t/dt)); print("restart", rs, t, flush=True)
     while t < Tt - 1e-9:
         if ckf and i % (ck*ST) == 0 and i > 0:
             import pickle; C = dict(z=z, psi=psi, t=t, i=i, bad=bad, prev=prev, w2=w2, S0=s.S0, m0=s.m0, fab=(f.tail, f.head, f.S1, f.S2, f.S3)); C.update(snl=snl, snv=snv)
