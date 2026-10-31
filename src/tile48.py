@@ -1,6 +1,6 @@
-"""tile48: чи витримує велика Матриця кипіння (черга № 35, розд. 4.4 (48)). Прогріваємо малу Матрицю Ls (ψ заморожене) до сталого кипіння,
-розкладаємо її плиткою на велику ґратку L = k·Ls, додаємо шум (ламає періодичність) і стежимо, чи кипіння тримається (|z|² лишається низьким)
-чи згасає до спокою (|z|² → w₊² ≈ 6,85), як було б, якщо кипіння — ефект малого тора."""
+"""tile48: does a large Matrix sustain boiling (queue No. 35, sec. 4.4 (48)). We warm up a small Matrix Ls (ψ frozen) to steady boiling,
+tile it onto a large lattice L = k·Ls, add noise (breaks the periodicity) and check whether boiling persists (|z|² stays low)
+or dies out to rest (|z|² → w₊² ≈ 6.85), as it would if boiling were an effect of the small torus."""
 import numpy as np, sys, json
 import stall43 as T
 

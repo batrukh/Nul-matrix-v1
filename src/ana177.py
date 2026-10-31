@@ -1,4 +1,4 @@
-"""ana177: світи на дірці полотна. Для кожного прогону (TAG/s*_seed*_R*_q*): час першого світу, світи на дірці (вузол у колі R+2 від центру) і поза нею."""
+"""ana177: domains at a hole in the substrate. For each run (TAG/s*_seed*_R*_q*): time of the first domain, domains at the hole (a node within R+2 of the centre) and away from it."""
 import numpy as np, json, glob, os, sys, re
 NB = [(1, 0), (-1, 0), (0, 1), (0, -1), (-1, 1), (1, -1)]
 def dist(L):

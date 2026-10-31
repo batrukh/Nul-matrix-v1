@@ -1,7 +1,7 @@
-"""(113): що відбирає протосвіти у світи. Кадри (111): 4 реалізації 2D L96, t = 1..60. Протосвіт — зв'язна пласка ділянка Матриці
-(|гол.| < 0,35, ψ < 0, далі 3 від світів), ≥ 3 вузлів. Вік — скільки кадрів поспіль ділянка існувала (перекриття ≥ 30 %).
-«Став світом» — якщо в наступні 1..5 кадрів на ≥ 3 її вузлах ψ > 0 і цей світ новий (не торкався старих світів).
-Порівнюємо ознаки в останній кадр перед народженням з тими самими ознаками довгожителів того ж віку, які світом не стали."""
+"""(113): what selects protodomains to become domains. Frames (111): 4 realisations of 2D L96, t = 1..60. A protodomain is a connected flat patch of the Matrix
+(|hol.| < 0.35, ψ < 0, farther than 3 from domains), ≥ 3 nodes. Age — how many consecutive frames the patch existed (overlap ≥ 30 %).
+"Became a domain" — if in the next 1..5 frames ψ > 0 on ≥ 3 of its nodes and this domain is new (did not touch old domains).
+We compare the features in the last frame before birth with the same features of long-lived patches of the same age that did not become domains."""
 import os; os.environ["NB"] = "0"
 import numpy as np, json, local60 as LC, contextlib, io
 from scipy.ndimage import distance_transform_edt as edt, label
@@ -19,13 +19,13 @@ for sd in (1, 2, 3, 4):
     for k in range(T):
         tl = d["tail"][k]; fl = tl != t0; f.tail = tl; f.head = np.where(fl, t0, h0)
         A, H = node_feats(f, d["z"][k].astype(complex)); HH.append(H); AA.append(A)
-        od = np.bincount(tl, None, f.n); EX.append((od == 0) | (od == 6))             # екстремум τ: усі стріли вузла назовні або всередину
+        od = np.bincount(tl, None, f.n); EX.append((od == 0) | (od == 6))             # extremum of τ: all arrows of a node point outwards or inwards
     W = [(PS[k] > 0).reshape(L, L) for k in range(T)]
     far = [edt(~np.tile(W[k], (3, 3)))[L:2*L, L:2*L] > 3 for k in range(T)]
     FL = [(HH[k].reshape(L, L) < 0.35) & (PS[k].reshape(L, L) < 0) & far[k] for k in range(T)]
     LB = [lab(F_) for F_ in FL]
     age = [np.zeros((L, L), int) for _ in range(T)]
-    for k in range(1, T):                                                               # вік: успадковуємо від попереднього кадру через перекриття
+    for k in range(1, T):                                                               # age: inherited from the previous frame through overlap
         for c in np.unique(LB[k])[1:]:
             m = LB[k] == c; prev = age[k - 1][m & FL[k - 1]]
             age[k][m] = (prev.max() + 1) if (m & FL[k - 1]).sum() >= 0.3*m.sum() else 1

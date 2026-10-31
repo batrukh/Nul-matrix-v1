@@ -1,9 +1,9 @@
-"""gf104: протополе Φ★ + калібрувальне поле SO(5) (gauge91) усередині повної моделі local60 (живі нитки, живе ψ).
-Варіант А: калібрувальне поле «спить» у Матриці (ваги max(χ(ψ), floor)). Крок раз на K кроків ниток (dt_g = K·dt), тертя pg.
-Зворотна дія на світ та сама, що в (92): ψ̇ += pf·χ'(ψ)·trΦ².
-Детектор Z₂-дефекту калібрувально-інваріантний: голономія площини v по трикутнику з перенесенням ланками U, det < 0.
-Посадка вихору (plant): сингулярне калібрувальне перетворення g = R(φ), φ = θ/2 навколо точки в площині (e_u, e_v) з власних векторів Φ★ у центрі,
-плюс R(π) на ланках, що перетинають розріз (згорнута різниця кутів), — так розріз зникає, а потік Z₂ лишається в центрі."""
+"""gf104: protofield Φ★ + SO(5) gauge field (gauge91) inside the full model local60 (live links, live ψ).
+Variant A: the gauge field "sleeps" in the Matrix (weights max(χ(ψ), floor)). One step per K link steps (dt_g = K·dt), friction pg.
+Back-reaction on the domain is the same as in (92): ψ̇ += pf·χ'(ψ)·trΦ².
+The Z₂ defect detector is gauge invariant: holonomy of the plane v around a triangle with transport by links U, det < 0.
+Planting a vortex (plant): singular gauge transformation g = R(φ), φ = θ/2 around a point in the plane (e_u, e_v) of eigenvectors of Φ★ at the centre,
+plus R(π) on links that cross the cut (wrapped angle difference) — so the cut disappears and the Z₂ flux stays at the centre."""
 import numpy as np
 import phi90 as PH, gauge91 as G, matter98 as M, gvort99 as GV
 
@@ -23,9 +23,9 @@ class GF:
         return psi + dt*pf*(dchi_(p)*t2).reshape(-1)
 
     def defects(s, psi, thr=0.3, aware=False):
-        """det голономії площини по трикутниках (2, L, L) і маска світу (усі три вершини ψ > thr).
-        aware (120): вакууми Φ★ і −Φ★ рівноправні (b = 0); у домені з трьома додатними власними значеннями площина v —
-        подвійна пара від'ємних, а не два найбільші з трьох майже рівних (старий детектор давав там хибні вихори)."""
+        """det of the plane holonomy on triangles (2, L, L) and the domain mask (all three vertices ψ > thr).
+        aware (120): the vacua Φ★ and −Φ★ are equivalent (b = 0); in a domain with three positive eigenvalues the plane v is
+        the degenerate pair of negative ones, not the two largest of three nearly equal ones (the old detector saw false vortices there)."""
         if aware:
             w, v = np.linalg.eigh(s.P); B = np.where(((w > 0).sum(-1) >= 3)[..., None, None], v[..., :, :2], v[..., :, 3:])
         else: B = M.planes(s.P)
@@ -41,7 +41,7 @@ class GF:
 
     def plant(s, i0, j0):
         L = s.L; X, Y = PH.coords(L); _, dx, dy = M.wrapd(X, Y, X[i0, j0], Y[i0, j0], L); phi = np.arctan2(dy, dx)/2
-        w, v = np.linalg.eigh(s.P[i0, j0]); eu, ev = v[:, 2], v[:, 3]          # один u- і один v-вектор
+        w, v = np.linalg.eigh(s.P[i0, j0]); eu, ev = v[:, 2], v[:, 3]          # one u- and one v-vector
         Gm = np.outer(ev, eu) - np.outer(eu, ev)
         def R(a):
             c, sn = np.cos(a)[..., None, None], np.sin(a)[..., None, None]
@@ -49,7 +49,7 @@ class GF:
             return np.eye(5) - Pp + c*Pp + sn*Gm
         g = R(phi); s.P = PH.sym0(g @ s.P @ np.swapaxes(g, -1, -2)); s.Pi = g @ s.Pi @ np.swapaxes(g, -1, -2)
         for m, d in enumerate(G.DIRS):
-            pn = G.sh(phi, d); dlt = phi - pn; c = GV.wrap_half(dlt) - dlt          # 0 або ±π на розрізі
+            pn = G.sh(phi, d); dlt = phi - pn; c = GV.wrap_half(dlt) - dlt          # 0 or ±π on the cut
             gn = G.sh(g, d)
             s.U[m] = g @ s.U[m] @ np.swapaxes(gn, -1, -2) @ R(c); s.E[m] = g @ s.E[m] @ np.swapaxes(g, -1, -2)
         return float(X[i0, j0]), float(Y[i0, j0])

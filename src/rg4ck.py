@@ -1,17 +1,17 @@
-"""rg4ck (170): rungen4 з контрольними точками (ck — крок у од. часу, ckdir — тека; продовження автоматичне).\nrungen4 (№ 60, етап Б): клітинка 3D-Матриці — тетраедр (симплекс своєї розмірності), а не трикутник.
-Сітка — тетраедрична (kind='tet', розбиття Куна: кожен кубик = 6 тетраедрів x, x+e_a, x+e_a+e_b, x+(1,1,1)).
-Енергія клітинки — петлі через усі 4 вершини тетраедра (3 чотирикутні петлі на тетраедр; у 2D аналог — петля через 3 вершини трикутника).
-Щоб вакуум мав ту саму амплітуду w₊, що у 2D, член петлі має степінь 3 за амплітудою: −β′ Re(P)|P|^(a−1), a = 3/k (k = 4 нитки);
-порушення ε₀: Et·(|P|^a − Re(P)|P|^(a−1)). Нормування «як у 2D» (варіант В): β нитки = 2β/(a·k_e) (k_e — петель на нитку),
-ε₀ × 8/(петель на вузол) (вага ε₀ на вузол як у 2D), κ і λ_c × 6/(ниток на вузол). Решта (α, місцевий закон, τ, діагностика) — як rungen.
-Трикутники сітки лишаються лише для діагностики (|гол.|, пласкі вузли) і для околу місцевого закону."""
+"""rg4ck (170): rungen4 with checkpoints (ck — interval in time units, ckdir — directory; resume is automatic).\nrungen4 (No. 60, stage B): the cell of the 3D Matrix is a tetrahedron (the simplex of its own dimension), not a triangle.
+The mesh is tetrahedral (kind='tet', Kuhn subdivision: each cube = 6 tetrahedra x, x+e_a, x+e_a+e_b, x+(1,1,1)).
+Cell energy — loops through all 4 vertices of the tetrahedron (3 quadrilateral loops per tetrahedron; the 2D analogue is the loop through the 3 vertices of a triangle).
+For the vacuum to have the same amplitude w₊ as in 2D, the loop term has degree 3 in the amplitude: −β′ Re(P)|P|^(a−1), a = 3/k (k = 4 links);
+ε₀ violation: Et·(|P|^a − Re(P)|P|^(a−1)). Normalisation "as in 2D" (variant C): link β = 2β/(a·k_e) (k_e — loops per link),
+ε₀ × 8/(loops per node) (ε₀ weight per node as in 2D), κ and λ_c × 6/(links per node). The rest (α, local law, τ, diagnostics) — as in rungen.
+The mesh triangles are kept only for diagnostics (|hol.|, flat nodes) and for the neighbourhood of the local law."""
 import os; os.environ["NB"] = "0"; os.environ.setdefault("DELTA", "1e-6")
 import numpy as np, json, sys, itertools
 import fabgen as G, simNlib as N, local60 as LC, rnd51 as R, tile48 as TL, birth48 as BR
 g = mu = 1.0
 
 def quads(f):
-    """Чотирикутні петлі тетраедрів Куна: вершини (a, b, c, d) у порядку обходу; по 3 на тетраедр, 6 тетраедрів на вузол."""
+    """Quadrilateral loops of the Kuhn tetrahedra: vertices (a, b, c, d) in traversal order; 3 per tetrahedron, 6 tetrahedra per node."""
     L = f.L; I = f.ijk; idx = lambda c: ((c[..., 0] % L)*L + (c[..., 1] % L))*L + (c[..., 2] % L); Q = []
     for p in itertools.permutations(range(3)):
         e0 = np.zeros(3, int); e0[p[0]] = 1; e1 = e0.copy(); e1[p[1]] = 1
@@ -20,12 +20,12 @@ def quads(f):
     return np.concatenate(Q)
 
 class MQ:
-    """Як sim34d.M34, але клітинки — петлі довжини k (тут 4) зі степенем a = 3/k."""
+    """As sim34d.M34, but the cells are loops of length k (here 4) with power a = 3/k."""
     def __init__(s, f, QV, beta, eps0, h, kappa, wp):
         s.f = f; s.QV = QV; s.k = QV.shape[1]; s.a = 3.0/s.k; s.eps0, s.h, s.kappa, s.wp = eps0, h, kappa, wp; s.d2 = float(os.environ["DELTA"])**2
         s.beta = beta; s.pin = np.zeros(f.m, bool)
     def links(s):
-        """Номери ниток петель і знаки (+1, якщо нитка зберігається у напрямку обходу) — після перевертання стріл."""
+        """Link indices of the loops and signs (+1 if the link is stored in the traversal direction) — after flipping the arrows."""
         f = s.f; n = f.n; key = np.r_[f.tail*n + f.head, f.head*n + f.tail]; eid = np.r_[np.arange(f.m), np.arange(f.m)]
         sg = np.r_[np.ones(f.m, int), -np.ones(f.m, int)]; o = np.argsort(key); key, eid, sg = key[o], eid[o], sg[o]
         s.E = []; s.S = []
@@ -45,7 +45,7 @@ class MQ:
         force = s.kappa*(np.bincount(a_, we*dpsi, f.n) - np.bincount(b_, we*dpsi, f.n)) - (psi**3 - psi) + s.h
         l, P = s.loop(z); aP = np.sqrt(np.abs(P)**2 + s.d2); pa = aP**(a - 1); rr = P.real*P/aP**2     # rr = Re P / P̄
         Et = s.eps0*np.mean([chi[s.QV[:, j]] for j in range(s.k)], 0)
-        cB = pa*(1 + (a - 1)*rr); cE = -Et*pa*(a*P/aP - 1 - (a - 1)*rr)           # сила на нитку петлі = Q̄·(β′ cB + cE)
+        cB = pa*(1 + (a - 1)*rr); cE = -Et*pa*(a*P/aP - 1 - (a - 1)*rr)           # force on a link of the loop = Q̄·(β′ cB + cE)
         lw = np.zeros(f.m, complex); br = np.zeros(f.m, complex)
         for j in range(s.k):
             Qb = np.conj(np.prod([l[i] for i in range(s.k) if i != j], 0))
@@ -59,7 +59,7 @@ class MQ:
     def energy(s, z, psi):
         f = s.f; A = np.abs(z); chi = ((1 + psi)/2)**2; l, P = s.loop(z); aP = np.sqrt(np.abs(P)**2 + s.d2); pa = aP**(s.a - 1)
         Et = s.eps0*np.mean([chi[s.QV[:, j]] for j in range(s.k)], 0); bl = np.zeros(f.m)
-        # β′ на нитку: петля ділить внесок порівну між своїми нитками (енергетично узгоджено лише при сталому β′)
+        # β′ per link: a loop shares its contribution equally between its links (energetically consistent only for constant β′)
         return float(np.sum(g*A**2/2 + mu*A**4/4) - np.mean(s.beta)*np.sum(P.real*pa) + np.sum(Et*(aP**s.a - P.real*pa))
                      + np.sum((psi**2 - 1)**2/4 - s.h*psi) + s.kappa/2*np.sum(np.sqrt(A**2 + s.d2)/s.wp*(psi[f.tail] - psi[f.head])**2))
 
@@ -76,7 +76,7 @@ def run(ck=5.0, ckdir="ck170", L=16, seed=1, Tt=100.0, dt=0.005, n=100, ell=3.0,
     rng = np.random.default_rng(seed); r_ = np.roots([1, 0, -1, -h]); psiM = r_[np.isreal(r_)].real.min()
     z = np.sqrt(s0)*(1 + 0.01*(rng.standard_normal(f.m) + 1j*rng.standard_normal(f.m))); psi = psiM + 0.01*rng.standard_normal(f.n)
     if check: return s, f, mod, z, psi
-    if init:                                                             # посадка (як rungen (114)): ψ-куля радіуса pr у центрі найбільшої пласкої ділянки знімка init
+    if init:                                                             # planting (as rungen (114)): a ψ ball of radius pr at the centre of the largest flat patch of the init snapshot
         d0 = np.load(init + ".npz"); assert (d0["bad"] == bad).all(); z = d0["z"]; psi = d0["psi"].copy()
         hol = np.abs(f.holonomy(z)); hn = np.bincount(f.TV.ravel(), np.repeat(hol, 3), f.n)/f.tnode; M = (hn < 0.35) & (psi < 0)
         cs_ = []; seen = np.zeros(f.n, bool)
@@ -96,13 +96,13 @@ def run(ck=5.0, ckdir="ck170", L=16, seed=1, Tt=100.0, dt=0.005, n=100, ell=3.0,
     name = f"rq_L{L}_s{seed}_n{n}" + (f"_ac{ac:g}" if ac != 1.0 else "") + (f"_e{eps0:g}" if eps0 != 3.0 else "") + (f"_lc{lc:g}" if lc != 1.3 else "") + (f"_pr{pr:g}" if init else "")
     t = 0.0; i = 0; ST = int(round(1/dt)); w2 = []; prev = None; FP = int(round(fp/dt)) if fp else 0; bal = []
     os.makedirs(ckdir, exist_ok=True); CK = os.path.join(ckdir, name + "_ck"); CKS = int(round(ck/dt)) if ck else 0
-    if CKS and os.path.exists(CK + ".npz"):                              # продовження з контрольної точки
+    if CKS and os.path.exists(CK + ".npz"):                              # resume from a checkpoint
         d = np.load(CK + ".npz"); z = d["z"]; psi = d["psi"]; t = float(d["t"]); i = int(d["i"]); prev = d["prev"] if d["prev"].size else None
         w2 = json.load(open(CK + ".json"))["w2"]; print("resume from t =", t, flush=True)
     if FP: name = "bal_" + name
     print("loops/node", tq, "loops/link", np.unique(mod.ke), flush=True)
     while t < Tt - 1e-9:
-        if FP and i % FP == 0:                                           # складники сили на ψ у посадженій кулі (як rungen fp, (115))
+        if FP and i % FP == 0:                                           # components of the force on ψ in the planted ball (as rungen fp, (115))
             Pp = s.F(z, psi, parts=True); _, Pq = mod.loop(z); qin = zone[QV].all(1); inn = zone[f.tail] & zone[f.head]
             r = dict(t=round(t, 3), psi=float(psi[zone].mean()), A2=float((np.abs(z[inn])**2).mean()), qhol=float(np.abs(np.angle(Pq[qin])).mean()))
             r.update({k: float(v[zone].mean()) for k, v in Pp.items()}); bal.append(r); print(r, flush=True)

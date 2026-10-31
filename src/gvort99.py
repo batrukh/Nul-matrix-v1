@@ -1,8 +1,8 @@
-"""gvort99: речовина, шлях А — Z₂-вихори протополя з калібрувальним полем SO(5) (gauge91), однорідний світ a = −1.
-Старт: Φ = R(φ)·P0·R(φ)ᵀ, φ = (θ1 − θ2)/2 у площині (e3, e4); ланки U_l = R(φ(n) − φ(n+μ)) з різницею, згорнутою в (−π/2, π/2],
-тож коваріантна похідна ≈ 0 всюди, а голономія R(π) ∈ S(O(3)×O(2)) сидить у двох ядрах (потік Z₂).
-Спершу тертя (релаксація до статичного стану), потім вільна динаміка. Міряємо: енергію пари E(d) (скінченна маса — E не росте з d),
-ядра (трикутники з tr H < 1, тобто голономія далека від 1), рух ядер."""
+"""gvort99: matter, path A — Z₂ vortices of the protofield with the SO(5) gauge field (gauge91), uniform domain a = −1.
+Start: Φ = R(φ)·P0·R(φ)ᵀ, φ = (θ1 − θ2)/2 in the plane (e3, e4); links U_l = R(φ(n) − φ(n+μ)) with the difference wrapped into (−π/2, π/2],
+so the covariant derivative ≈ 0 everywhere, and the holonomy R(π) ∈ S(O(3)×O(2)) sits in the two cores (Z₂ flux).
+First friction (relaxation to a static state), then free dynamics. We measure: pair energy E(d) (finite mass — E does not grow with d),
+cores (triangles with tr H < 1, i.e. holonomy far from 1), motion of the cores."""
 import numpy as np, json, sys
 import phi90 as PH, gauge91 as G, matter98 as M
 
@@ -18,7 +18,7 @@ def init(L, d):
         ang = wrap_half(phi - np.roll(phi, (-dvec[0], -dvec[1]), axis=(0, 1)))
         U.append(M.rot(ang, 2, 3))
     rng = np.random.default_rng(1); U = np.array(U)
-    for m in range(3):                                   # малий шум: точна гратчаста конфігурація — стаціонарна (сідло)
+    for m in range(3):                                   # small noise: the exact lattice configuration is stationary (a saddle)
         Xn = rng.standard_normal(U[m].shape)*0.02; Xn = Xn - np.swapaxes(Xn, -1, -2); U[m] = G.cayley(Xn) @ U[m]
     P = P + PH.sym0(0.01*rng.standard_normal(P.shape))
     return PH.sym0(P), U, X, Y
@@ -35,7 +35,7 @@ def cores(g, U, X, Y, L, thr=3.0):
     return cl
 
 def wilson(P, U, i0, j0, r, L):
-    """голономія по паралелограму навколо (i0, j0) з півстороною r; знак det на площині v у базовій точці: −1 — всередині потік Z₂"""
+    """holonomy around a parallelogram around (i0, j0) with half-side r; sign of det on the plane v at the base point: −1 — Z₂ flux inside"""
     W = np.eye(5); n = [(i0 - r) % L, (j0 - r) % L]; base = tuple(n)
     for mu, sgn, steps in ((0, 1, 2*r), (1, 1, 2*r), (0, -1, 2*r), (1, -1, 2*r)):
         dv = G.DIRS[mu]

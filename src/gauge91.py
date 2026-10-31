@@ -1,28 +1,28 @@
-"""gauge91: протополе Φ★ (як phi90) + калібрувальне поле SO(5) на нитках (класична гратчаста теорія Янга–Міллса–Хіггса).
-Перевірка (не постулат), 22.10.2026: чи стають безмасовими калібрувальні хвилі незламаного сектору O(3) × O(2) («фотон» — O(2)).
+"""gauge91: protofield Φ★ (as phi90) + SO(5) gauge field on the links (classical lattice Yang–Mills–Higgs theory).
+Check (not a postulate), 22.10.2026: whether the gauge waves of the unbroken sector O(3) × O(2) become massless (the "photon" is O(2)).
     H = Σ_n [½|Π|² + V(Φ)] + Σ_l [(1/3)|UΦ'Uᵀ − Φ|² + (ka·w_l/4)|E|²] + Σ_tri kb·w_t·(5 − tr H_tri)
-    Φ̇ = Π, U̇ = E·U (E антисиметрична), Π̇ = −∂H/∂Φ, Ė = −(2/(ka·w_l))·P_A[(∂H/∂U)·Uᵀ].
-Ланка (n, μ) переносить Φ з n+μ у n; напрямки μ: (1,0), (0,1), (−1,1) — ті самі нитки, що в simNlib.Fabric.
-Ваги w: 1 всюди (варіант «поле всюди») або χ(ψ) з підлогою (варіант «поле лише де протополе»).
-Інтегратор: стрибок жаби (leapfrog), U оновлюється перетворенням Келі (точно ортогональне)."""
+    Φ̇ = Π, U̇ = E·U (E antisymmetric), Π̇ = −∂H/∂Φ, Ė = −(2/(ka·w_l))·P_A[(∂H/∂U)·Uᵀ].
+Link (n, μ) transports Φ from n+μ to n; directions μ: (1,0), (0,1), (−1,1) — the same links as in simNlib.Fabric.
+Weights w: 1 everywhere (variant "field everywhere") or χ(ψ) with a floor (variant "field only where the protofield is").
+Integrator: leapfrog, U updated by the Cayley transform (exactly orthogonal)."""
 import numpy as np, json, sys
 from phi90 import sym0, dV, vacuum, coords, tdist
 
 DIRS = [(1, 0), (0, 1), (-1, 1)]
-OWN = None; PARTIAL = None                                                         # (145): маска світу, де стартує хвиля (необов'язково)
+OWN = None; PARTIAL = None                                                         # (145): mask of the domain where the wave starts (optional)
 I5 = np.eye(5)
 T_ = lambda A: np.swapaxes(A, -1, -2)
 PA = lambda X: 0.5*(X - T_(X))
 tr = lambda A: np.trace(A, axis1=-2, axis2=-1)
-def sh(A, d): return np.roll(A, (-d[0], -d[1]), axis=(0, 1))     # значення у вузлі n+d
-def put(A, d): return np.roll(A, (d[0], d[1]), axis=(0, 1))       # віднести значення, обчислене в n, до вузла n+d
+def sh(A, d): return np.roll(A, (-d[0], -d[1]), axis=(0, 1))     # value at node n+d
+def put(A, d): return np.roll(A, (d[0], d[1]), axis=(0, 1))       # assign a value computed at n to node n+d
 
 def cayley(X):
     return np.linalg.solve(I5 - X/2, I5 + X/2)
 
 class Gauge:
     def __init__(s, a, wl, wt, ka=1.0, kb=1.0, b=0.0):
-        s.b = b; s.a = a; s.wl = wl; s.wt = wt; s.ka = ka; s.kb = kb      # wl (3,L,L), wt (2,L,L): вгору, вниз (індекс — базовий вузол a)
+        s.b = b; s.a = a; s.wl = wl; s.wt = wt; s.ka = ka; s.kb = kb      # wl (3,L,L), wt (2,L,L): up, down (index — base node a)
 
     def hol(s, U):
         U0, U1, U2 = U
@@ -33,7 +33,7 @@ class Gauge:
     def edens(s, P, Pi, U, E):
         e = 0.5*np.sum(Pi**2, axis=(-2, -1))
         P2 = P @ P; t2 = tr(P2)
-        e += s.a/2*t2 - s.b/3*tr(P2 @ P) + t2**2/4 + 0.5/4*tr(P2 @ P2)   # (123): кубічний член b
+        e += s.a/2*t2 - s.b/3*tr(P2 @ P) + t2**2/4 + 0.5/4*tr(P2 @ P2)   # (123): cubic term b
         for m, d in enumerate(DIRS):
             D = U[m] @ sh(P, d) @ T_(U[m]) - P
             e += (1/3)*np.sum(D**2, axis=(-2, -1)) + s.ka*s.wl[m]/4*np.sum(E[m]**2, axis=(-2, -1))
@@ -51,11 +51,11 @@ class Gauge:
             R[m] += (4/3)*(D @ X)
         U0, U1, U2 = U
         bu = (s.kb*s.wt[0])[..., None, None]; bd = (s.kb*s.wt[1])[..., None, None]
-        A, B = U0, sh(U2, DIRS[0]); Hu = A @ B @ T_(U1)            # вгору: H = A·B·Cᵀ, A = U0(a), B = U2(b), C = U1(a)
+        A, B = U0, sh(U2, DIRS[0]); Hu = A @ B @ T_(U1)            # up: H = A·B·Cᵀ, A = U0(a), B = U2(b), C = U1(a)
         R[0] += -bu*T_(Hu)
         R[2] += put(-bu*(T_(A) @ T_(Hu) @ A), DIRS[0])
         R[1] += -bu*Hu
-        A, B, C = sh(U1, DIRS[0]), sh(U0, DIRS[1]), sh(U2, DIRS[0]); Hd = A @ T_(B) @ T_(C)   # вниз: H = A·Bᵀ·Cᵀ, A = U1(b), B = U0(c), C = U2(b)
+        A, B, C = sh(U1, DIRS[0]), sh(U0, DIRS[1]), sh(U2, DIRS[0]); Hd = A @ T_(B) @ T_(C)   # down: H = A·Bᵀ·Cᵀ, A = U1(b), B = U0(c), C = U2(b)
         R[1] += put(-bd*T_(Hd), DIRS[0])
         R[0] += put(-bd*(T_(C) @ Hd @ C), DIRS[1])
         R[2] += put(-bd*Hd, DIRS[0])
@@ -91,7 +91,7 @@ def run(src="", L=48, aw=-1.0, am=1.0, mode="world", var="all", floor=0.02, kind
     g = Gauge(a, wl, wt, ka, kb)
     U = np.broadcast_to(I5, (3, L, L, 5, 5)).copy(); E = np.zeros((3, L, L, 5, 5)); Pi = np.zeros_like(P)
     t = 0.0
-    if src:                                                        # спільна релаксація Φ і калібрувального поля (тертя)
+    if src:                                                        # joint relaxation of Φ and the gauge field (friction)
         while t < Tr - 1e-9: P, Pi, U, E = g.step(P, Pi, U, E, dt, gam=1.0); t += dt
         Pi[:] = 0; E[:] = 0
     X, Y = coords(L)
@@ -101,8 +101,8 @@ def run(src="", L=48, aw=-1.0, am=1.0, mode="world", var="all", floor=0.02, kind
     w_, v_ = np.linalg.eigh(P[k0]); v_ = v_[:, np.argsort(w_)]
     pair = dict(photon=(3, 4), broken=(0, 3), gluon=(0, 1))[kind]
     Gk = np.outer(v_[:, pair[0]], v_[:, pair[1]]); Gk = Gk - Gk.T
-    # гладкий вихровий векторний потенціал A = amp·exp(−r²/2r0²)·(−Δy, Δx)/r0 (магнітний потік у плямі), θ_μ = A(середина ланки)·e_μ;
-    # поштовх лише однієї ланки збуджував би головно «оптичну» (шахову між трикутниками вгору/вниз) гілку
+    # smooth vortex vector potential A = amp·exp(−r²/2r0²)·(−Δy, Δx)/r0 (magnetic flux in a spot), θ_μ = A(link midpoint)·e_μ;
+    # a kick of a single link would excite mainly the "optical" branch (staggered between up and down triangles)
     UB = U.copy(); EV = [(1.0, 0.0), (0.5, np.sqrt(3)/2), (-0.5, np.sqrt(3)/2)]
     for m, ev in enumerate(EV):
         mx, my = X + ev[0]/2, Y + ev[1]/2; best = None
@@ -126,8 +126,8 @@ def run(src="", L=48, aw=-1.0, am=1.0, mode="world", var="all", floor=0.02, kind
             rec.append(dict(t=round(t, 2), prof=[float(v) for v in prof], tot=float(e.sum()), fin=float(e[inw].sum()/e.sum()),
                             reach_w=float(r[hot & inw].max()) if (hot & inw).any() else 0.0,
                             reach_m=float(r[hot & ~inw].max()) if (hot & ~inw).any() else 0.0))
-            if OWN is not None: rec[-1]["fown"] = float(e[OWN].sum()/e.sum())     # (145): частка у власному світі (без сусідніх світів)
-            if PARTIAL and min(t % 10, 10 - t % 10) < dt/2: json.dump([dict(t=q["t"], fin=q["fin"], fown=q.get("fown"), tot=q["tot"]) for q in rec], open(PARTIAL, "w"))   # (182): проміжний запис довгих прогонів
+            if OWN is not None: rec[-1]["fown"] = float(e[OWN].sum()/e.sum())     # (145): fraction in the own domain (without neighbouring domains)
+            if PARTIAL and min(t % 10, 10 - t % 10) < dt/2: json.dump([dict(t=q["t"], fin=q["fin"], fown=q.get("fown"), tot=q["tot"]) for q in rec], open(PARTIAL, "w"))   # (182): intermediate output of long runs
     dE = float((g.edens(PB, PiB, UB, EB).sum() - e0B)/max(abs(e0B - e0A), 1e-30))
     name = f"gauge91_{('src_' + src.split('/')[-1][6:-4]) if src else 'uni' + mode}_{var}_{kind}_ka{ka:g}_kb{kb:g}" + (f"_f{floor:g}" if var == "world" else "")
     json.dump(dict(rec=rec, drift=dE), open(name + ".json", "w"))

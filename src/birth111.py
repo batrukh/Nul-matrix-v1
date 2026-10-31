@@ -1,6 +1,6 @@
-"""(111): пошук «запалу» народження світу у 2D. Знімки local60 sn=1 (щоодиниці). Народження — новий світ (≥ 5 вузлів зі ψ > 0), що не перетинається
-зі світами попередньої миті. Для місць народження і для контрольних вузлів Матриці (далі 6 від усіх світів і від місця народження) в ту саму мить
-t_b − k (k = 2, 5, 10) порівнюємо місцеві ознаки вузла. Міра — AUC (0,5 — ознака нічого не каже; ≈ 1 або ≈ 0 — сильний запал)."""
+"""(111): search for the nucleation "trigger" in 2D. Frames local60 sn=1 (every time unit). A birth is a new domain (≥ 5 nodes with ψ > 0) that does not overlap
+the domains of the previous moment. For birth sites and for control Matrix nodes (farther than 6 from all domains and from the birth site) at the same moment
+t_b − k (k = 2, 5, 10) we compare local node features. The measure is AUC (0.5 — the feature says nothing; ≈ 1 or ≈ 0 — a strong trigger)."""
 import os; os.environ["NB"] = "0"
 import numpy as np, json, sys, local60 as LC, birth48 as BR
 from scipy.ndimage import distance_transform_edt as edt
@@ -17,17 +17,17 @@ def features(s, f, z, psi, zp, L):
     hol = f.holonomy(z); TV = f.TV; tn = np.zeros(n); tc = np.zeros(n); h2 = np.zeros(n)
     for j in range(3): np.add.at(tn, TV[:, j], np.abs(hol)); np.add.at(tc, TV[:, j], 1); np.add.at(h2, TV[:, j], hol**2)
     holm = tn/tc; holsd = np.sqrt(np.maximum(h2/tc - (tn/tc)**2, 0))
-    od = np.bincount(a_, None, n)                                         # нитки, що виходять із вузла (за стрілою)
+    od = np.bincount(a_, None, n)                                         # links leaving the node (along the arrow)
     P = s.F(z, np.zeros(n), parts=True); cost = P["cost"]
-    dA = A2 - np.abs(zp)**2                                               # зміна інтенсивності за одиницю часу (кипіння)
-    boil = nodeavg(np.abs(dA)); sync = np.abs(nodeavg(dA))/np.maximum(boil, 1e-9)   # 1 — усі нитки вузла змінюються в такт
-    ph = np.angle(z*np.conj(zp)); phsync = np.hypot(nodeavg(np.cos(ph)), nodeavg(np.sin(ph)))   # узгодженість поворотів фаз
+    dA = A2 - np.abs(zp)**2                                               # change of intensity per unit time (boiling)
+    boil = nodeavg(np.abs(dA)); sync = np.abs(nodeavg(dA))/np.maximum(boil, 1e-9)   # 1 — all links of the node change in step
+    ph = np.angle(z*np.conj(zp)); phsync = np.hypot(nodeavg(np.cos(ph)), nodeavg(np.sin(ph)))   # coherence of phase rotations
     Avar = nodeavg(A2**2) - nodeavg(A2)**2
     return dict(psi=psi, A2=nodeavg(A2), A2sd=np.sqrt(np.maximum(Avar, 0)), hol=holm, holsd=holsd, extr=np.abs(od - 3.0), cost=cost,
                 boil=boil, sync=sync, phsync=phsync)
 
 def auc(x, y):
-    """AUC: імовірність, що випадковий вузол народження має більшу ознаку, ніж випадковий контрольний"""
+    """AUC: probability that a random birth node has a larger feature value than a random control node"""
     r = np.argsort(np.argsort(np.r_[x, y])) + 1; return float((r[:len(x)].sum() - len(x)*(len(x) + 1)/2)/(len(x)*len(y)))
 
 def analyse(nm, L=96, lags=(1, 2, 5, 10)):

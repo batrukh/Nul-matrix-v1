@@ -1,27 +1,27 @@
-"""mk186 (перевірка: чи тримає залишок народжень запас |z|): у диску R (типово 9) |z| ниток → випадкові значення з розподілу |z| ниток Матриці поза диском (обидва кінці ψ<0),
-решта ниток множиться на сталий множник, щоб Σ|z|² не змінилась (бюджет збережений). Варіанти: amp — лише |z|; ampscr — |z| і фази навмання;
-all — |z|, фази навмання і ψ → рівень Матриці. Файли rs/<сід>_k<k>_<варіант>R<R>_e<подія>.npz.
-mk183: (183) стани для втручання в острів. Для кожної події (сід, кадр k = j − 3) — диск радіуса R навколо центру нового світу (кадр j).
-Варіанти: ctl — без змін (перевірка відтворюваності); scr — фази ниток у диску випадкові (|z| той самий, запас незмінний);
-pn — фазовий шум σ = 0,5 рад; sham — те саме scr у диску того ж радіуса в іншому місці Матриці (далі 3 від світів, без народження в кадрах k..k+15).
-Пишемо rs/<сід>_k<k>_<варіант>[_<подія>].npz (z, ψ, t) і rs/events.json."""
+"""mk186 (test: does the remaining birth rate hold the |z| budget): in the disc R (default 9) the link |z| → random values from the |z| distribution of Matrix links outside the disc (both ends ψ<0),
+the remaining links are multiplied by a constant factor so that Σ|z|² does not change (budget conserved). Variants: amp — |z| only; ampscr — |z| and phases randomised;
+all — |z|, phases randomised and ψ → Matrix level. Files rs/<seed>_k<k>_<variant>R<R>_e<event>.npz.
+mk183: (183) states for the intervention in the island. For each event (seed, frame k = j − 3) — a disc of radius R around the centre of the new domain (frame j).
+Variants: ctl — no change (reproducibility check); scr — link phases in the disc randomised (|z| the same, budget unchanged);
+pn — phase noise σ = 0.5 rad; sham — the same scr in a disc of the same radius elsewhere in the Matrix (farther than 3 from domains, no birth in frames k..k+15).
+Writes rs/<seed>_k<k>_<variant>[_<event>].npz (z, ψ, t) and rs/events.json."""
 import numpy as np, json, os, sys
 from scipy.ndimage import distance_transform_edt as edt
 L = 96; R = float(sys.argv[1]) if len(sys.argv) > 1 else 9.0
-SN = os.environ.get("R183_SN", "birth_s{sd}/lc_s03.5_n100_L96_s{sd}_sk4l0_sn_sn.npz")  # кадри birth.sh
+SN = os.environ.get("R183_SN", "birth_s{sd}/lc_s03.5_n100_L96_s{sd}_sk4l0_sn_sn.npz")  # frames from birth.sh
 ev = [e for e in json.load(open("ev183_dk3.json")) if e["t_j"] <= 22.5]
-i_, j_ = np.divmod(np.arange(L*L), L); X = i_ + j_/2; Y = j_*np.sqrt(3)/2            # координати вузлів (i + j/2, j·√3/2)
+i_, j_ = np.divmod(np.arange(L*L), L); X = i_ + j_/2; Y = j_*np.sqrt(3)/2            # node coordinates (i + j/2, j·√3/2)
 def tdist(x0, y0):
     best = None
     for p in (-1, 0, 1):
         for q in (-1, 0, 1):
             d = np.hypot(X - x0 - p*L - q*L/2, Y - y0 - q*np.sqrt(3)/2*L); best = d if best is None else np.minimum(best, d)
     return best
-def centre(nodes):                                                                  # центр на торі через кругові середні
+def centre(nodes):                                                                  # centre on the torus via circular means
     ang = lambda v, P: np.angle(np.mean(np.exp(2j*np.pi*v/P)))*P/(2*np.pi) % P
     jj = ang(j_[nodes], L); ii = ang(i_[nodes], L); return ii + jj/2, jj*np.sqrt(3)/2
 from local60 import Loc
-f = Loc(L=L, h=0.3, lc=1.3).fab                                                     # sk=4: стріли ґратки, хвости не перевертаються
+f = Loc(L=L, h=0.3, lc=1.3).fab                                                     # sk=4: lattice arrows, tails are not flipped
 os.makedirs("rs", exist_ok=True); rng = np.random.default_rng(186 + int(R)); out = []; cache = {}
 for n_, e in enumerate(ev):
     sd, k = e["seed"], e["k"]
@@ -30,10 +30,10 @@ for n_, e in enumerate(ev):
     x0, y0 = centre(np.array(e["new"])); disk = tdist(x0, y0) <= R
     lk = disk[f.tail] & disk[f.head]
     base = f"{sd}_k{k}"
-    pm = float(np.median(psi[(psi < 0) & ~disk])); pr = np.where(disk, pm, psi)                      # ψ у диску → рівень Матриці
-    mat = (psi[f.tail] < 0) & (psi[f.head] < 0) & ~lk; am = float(np.mean(np.abs(z[mat])**2))         # |z|² Матриці поза диском
+    pm = float(np.median(psi[(psi < 0) & ~disk])); pr = np.where(disk, pm, psi)                      # ψ in the disc → Matrix level
+    mat = (psi[f.tail] < 0) & (psi[f.head] < 0) & ~lk; am = float(np.mean(np.abs(z[mat])**2))         # |z|² of the Matrix outside the disc
     aa = rng.choice(np.abs(z[mat]), f.m); za = np.where(lk, aa*np.exp(1j*np.angle(z)), z); B = np.sum(np.abs(z)**2)
-    sc = np.sqrt((B - np.sum(np.abs(za[lk])**2))/np.sum(np.abs(z[~lk])**2)); za = np.where(lk, za, z*sc)      # бюджет Σ|z|² той самий
+    sc = np.sqrt((B - np.sum(np.abs(za[lk])**2))/np.sum(np.abs(z[~lk])**2)); za = np.where(lk, za, z*sc)      # the budget Σ|z|² is the same
     zr = np.where(lk, aa*np.exp(2j*np.pi*rng.random(f.m)), za)
     np.savez(f"rs/{base}_ampR{R:g}_e{n_}.npz", z=za, psi=psi, t=t)
     np.savez(f"rs/{base}_ampscrR{R:g}_e{n_}.npz", z=zr, psi=psi, t=t)

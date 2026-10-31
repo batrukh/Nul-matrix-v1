@@ -1,7 +1,7 @@
-"""stall43: чому бульбашка, народжена кипінням, зупиняється (розд. 4.4 (43)). Модель і зв'язок λ_c — як у nuc41.
-mode=make: прогрів + народження + ріст до зупинки, зберегти стан (z, ψ, m0).
-mode=diag: зі збереженого стану — середні за час складники сили на ψ і |z|² як функції відстані до межі.
-mode=push: зі збереженого стану змінити один параметр (lc, eps0, h, kappa) і стежити за часткою бульбашки."""
+"""stall43: why a bubble born by boiling stops (sec. 4.4 (43)). The model and the λ_c coupling — as in nuc41.
+mode=make: warm-up + birth + growth until it stops, save the state (z, ψ, m0).
+mode=diag: from the saved state — time-averaged components of the force on ψ and |z|² as functions of the distance to the boundary.
+mode=push: from the saved state change one parameter (lc, eps0, h, kappa) and follow the bubble fraction."""
 import numpy as np, sys, json, os
 os.environ.setdefault("DELTA", "1e-6")
 import simNlib as N, sim34d as S
@@ -19,11 +19,11 @@ class Sys:
         sf = sf + s.lc*pe*z/(2*s.wp**2)
         q = s.lc*(np.abs(z)**2 - s.m0)/(4*s.wp**2)
         fc = np.bincount(a_, q, f.n) + np.bincount(b_, q, f.n)
-        if parts:                                           # складники сили на ψ
+        if parts:                                           # components of the force on ψ
             A = np.abs(z); we = np.sqrt(A**2 + mod.d2)/s.wp; dp = psi[b_] - psi[a_]
             grad = mod.kappa*(np.bincount(a_, we*dp, f.n) - np.bincount(b_, we*dp, f.n))
             pot = -(psi**3 - psi) + mod.h
-            cost = fpsi - grad - pot                         # решта rhs ψ — ціна порушення ε₀
+            cost = fpsi - grad - pot                         # the rest of the ψ rhs — the cost of violating ε₀
             return dict(pot=pot, grad=grad, cost=cost, coup=fc)
         return s.cs*sf + s.cc*c, fpsi + fc
     def step(s, z, psi, dt):
@@ -47,7 +47,7 @@ def make(L, lc, seed, T, h=0.3, warm=60.0, dt=0.005, **kw):
     return dict(m0=s.m0, out=out[::10] + [out[-1]])
 
 def dist(fab, B):
-    """Відстань (у кроках графа) до межі: + у бульбашці, − у Матриці."""
+    """Distance (in graph steps) to the boundary: + in the bubble, − in the Matrix."""
     nb = [[] for _ in range(fab.n)]
     for a, b in zip(fab.tail, fab.head): nb[a].append(b); nb[b].append(a)
     D = np.full(fab.n, -1); fr = [v for v in range(fab.n) if any(B[w] != B[v] for w in nb[v])]
@@ -59,7 +59,7 @@ def dist(fab, B):
             for w in nb[v]:
                 if D[w] < 0: D[w] = k; nx.append(w)
         fr = nx
-    return np.where(B, D, -D) + np.where(B, 1, 0)           # межові вузли бульбашки = +1, Матриці = 0
+    return np.where(B, D, -D) + np.where(B, 1, 0)           # boundary nodes of the bubble = +1, of the Matrix = 0
 
 def load(fn, **over):
     d = np.load(fn); p = dict(L=int(d['L']), lc=float(d['lc']), h=float(d['h']), m0=float(d['m0'])); p.update(over)

@@ -1,4 +1,4 @@
-# sim34d.py — sim34 з регуляризацією |P| біля нуля
+# sim34d.py — sim34 with regularisation of |P| near zero
 import numpy as np, sys, json
 from scipy.integrate import solve_ivp
 import simNlib as N
@@ -7,11 +7,11 @@ import os
 DELTA = float(os.environ.get("DELTA", "1e-6"))
 
 class M34:
-    """Модель (10), mode 'tri', але ψ передається лише цілими нитками: κ/2·Σ (|z_e|/w₊)(ψ_a − ψ_b)²."""
+    """Model (10), mode 'tri', but ψ is transmitted only by whole links: κ/2·Σ (|z_e|/w₊)(ψ_a − ψ_b)²."""
     def __init__(self, fab, beta=1.5, eps0=3.0, h=0.2, kappa=1.0):
         self.f = fab; self.beta, self.eps0, self.h, self.kappa = beta, eps0, h, kappa
         self.wp = N.wplus(beta); self.pin = np.zeros(fab.m, bool)
-        self.d2 = DELTA**2                       # регуляризація |P| → √(|P|² + δ²) біля P = 0 (лише числова)
+        self.d2 = DELTA**2                       # regularisation |P| → √(|P|² + δ²) near P = 0 (numerical only)
     def unpack(self, y):
         m = self.f.m; return y[:m] + 1j*y[m:2*m], y[2*m:]
     def pack(self, z, psi): return np.concatenate([z.real, z.imag, psi])
@@ -32,7 +32,7 @@ class M34:
         for nd in (p, q, r): force -= np.bincount(nd, dchi[nd]*cost, f.n)
         ph = z/Ad
         dz = -g*z - mu*A**2*z + self.beta*f.ww(z) + brk - 0.5*self.kappa*dpsi**2/self.wp*ph
-        dz[self.pin] = 0.0                       # нитки розрізу тримаються порожніми, поки діє діра
+        dz[self.pin] = 0.0                       # links of the cut are kept empty while the hole acts
         return np.concatenate([dz.real, dz.imag, force])
     def energy(self, y):
         f = self.f; z, psi = self.unpack(y); a, b = f.tail, f.head; A = np.abs(z)
@@ -62,11 +62,11 @@ def experiment(L, k, eps0, R, Wd, T1, tear=True, seed=0):
     fab = N.Fabric(L); S = N.sparsity(fab)
     mod = M34(fab, eps0=0.0, h=0.0)
     rng = np.random.default_rng(100 + k + 7*seed)
-    y = run(mod, mod.pack(N.matrix_state(fab, 1.5, k, rng), -np.ones(fab.n)), 100, S)   # Матриця з потоком k
+    y = run(mod, mod.pack(N.matrix_state(fab, 1.5, k, rng), -np.ones(fab.n)), 100, S)   # Matrix with flux k
     rn = N.disk(fab, 0); island = rn < R
     re = 0.5*(rn[fab.tail] + rn[fab.head])
     if not tear: ring = np.zeros(fab.m, bool)
-    elif Wd <= 1: ring = island[fab.tail] != island[fab.head]        # мінімальний розріз
+    elif Wd <= 1: ring = island[fab.tail] != island[fab.head]        # minimal cut
     else: ring = (re >= R) & (re < R + Wd)
     res = dict(L=L, k=k, eps0=eps0, R=R, tear=tear, n_island=int(island.sum()), n_ring=int(ring.sum()))
     res["matrix"] = diag(mod, y, island)
@@ -75,9 +75,9 @@ def experiment(L, k, eps0, R, Wd, T1, tear=True, seed=0):
     z = z.copy(); z[ring] = 0.0
     mod = M34(fab, eps0=eps0, h=0.2); mod.pin = ring.copy(); y = mod.pack(z, psi)
     if tear:
-        y = run(mod, y, T1, S); res["isolated"] = diag(mod, y, island)       # ізоляція протягом T1
+        y = run(mod, y, T1, S); res["isolated"] = diag(mod, y, island)       # isolation during T1
         z, psi = mod.unpack(y); z = z.copy()
-        z[ring] = 0.1*mod.wp*np.exp(1j*rng.uniform(-np.pi, np.pi, ring.sum()))  # заростання: нитки народжуються
+        z[ring] = 0.1*mod.wp*np.exp(1j*rng.uniform(-np.pi, np.pi, ring.sum()))  # regrowth: links are born
         mod.pin[:] = False; y = mod.pack(z, psi)
     T = 0.0
     while True:

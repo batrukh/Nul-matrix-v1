@@ -1,18 +1,18 @@
-"""ela139: пружне полотно (ідея автора 26.10, гіпотеза). Світ розтягує полотно, полотно тягне назад до рівноваги (стану до світу).
-Розтяг e_i = Σ_j G_ij u_j, u = ψ − ψ_М (джерело — світ), G = (−Δ + 1/ℓ²)⁻¹ на трикутній ґратці: розтяг іде всім полотном і слабшає з відстанню
-(на r ≪ ℓ як ln r, далі ∝ e^(−r/ℓ)). Енергія (γ/2) Σ u·e, сила на ψ: −γ e. ℓ = 0 означає ℓ = ∞ (чисте полотно Пуассона, u без середнього,
-як у моделі Огти–Кавасакі). Решта — local60 без змін; запуск: python3 ela139.py g=.. ell=.. <параметри local60.run>."""
+"""ela139: elastic substrate (author's idea of 26.10, hypothesis). A domain strains the substrate, and the substrate pulls back towards equilibrium (the state before the domain).
+Strain e_i = Σ_j G_ij u_j, u = ψ − ψ_M (source — the domain), G = (−Δ + 1/ℓ²)⁻¹ on the triangular lattice: the strain spreads over the whole substrate and weakens with distance
+(as ln r for r ≪ ℓ, ∝ e^(−r/ℓ) beyond). Energy (γ/2) Σ u·e, force on ψ: −γ e. ℓ = 0 means ℓ = ∞ (pure Poisson substrate, u with zero mean,
+as in the Ohta–Kawasaki model). The rest is local60 unchanged; run: python3 ela139.py g=.. ell=.. <local60.run parameters>."""
 import numpy as np, sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import local60 as M
 
 def kernel(L, ell):
     k = 2*np.pi*np.fft.fftfreq(L); kx, ky = k[:, None], k[None, :]
-    lam = 2*(3 - np.cos(kx) - np.cos(ky) - np.cos(ky - kx))       # −Δ трикутної ґратки (сусіди ±(1,0), ±(0,1), ±(−1,1)), вузол i = x·L + y
+    lam = 2*(3 - np.cos(kx) - np.cos(ky) - np.cos(ky - kx))       # −Δ of the triangular lattice (neighbours ±(1,0), ±(0,1), ±(−1,1)), node i = x·L + y
     if ell > 0: return 1.0/(lam + 1.0/ell**2)
     G = np.zeros_like(lam); G[lam > 1e-12] = 1.0/lam[lam > 1e-12]; return G
 
-G_, ELL, PSIM = None, 8.0, None                    # базова модель з 26.10 (рішення автора, журнал E): ℓ = 8, γ = 0,01; g=0 — модель без пружності
+G_, ELL, PSIM = None, 8.0, None                    # reference model since 26.10 (author's decision): ℓ = 8, γ = 0.01; g=0 — model without elasticity
 base_F = M.Loc.F
 def F(s, z, psi, parts=False):
     out = base_F(s, z, psi, parts)

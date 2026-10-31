@@ -1,12 +1,12 @@
-"""Fig. 8 статті: діагнози негативних результатів.
-(a) ефект Нордтведта (155): інерційна маса вихору у власній ямі глибини K, m_I/m = (a/g)₀/(a/g)_K з ff155 (r155), проти ⟨1/N³⟩ (числа журналу (155)).
-(b) 3D (170): найбільші пласкі острівці 3D (r170/ana170.json: розмір, середнє ψ) проти пласких ділянок 2D v1 перед народженням і без нього (r173 sel113)."""
+"""Fig. 8 of the paper: diagnoses of the negative results.
+(a) Nordtvedt effect (155): inertial mass of a vortex in its own well of depth K, m_I/m = (a/g)₀/(a/g)_K from ff155 (r155), versus ⟨1/N³⟩ (numbers of journal entry (155)).
+(b) 3D (170): largest flat 3D islands (r170/ana170.json: size, mean ψ) versus flat 2D v1 patches before nucleation and without it (r173 sel113)."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import sys, json, numpy as np; sys.path.insert(0, _H); from pstyle import *
 fig, ax = plt.subplots(1, 2, figsize=(9.5, 3.7))
 a = ax[0]; tag(a, "a")
 acc = {K: json.load(open(S + f"r155/ff155_K{K}_g0.006.json"))["acc"] for K in (0, 1, 4, 8)}
-mI = {K: acc[0]/acc[K] for K in (1, 4, 8)}; pred = {8: 1.08, 4: 1.16, 1: 1.99}            # ⟨1/N³⟩ із журналу (155)
+mI = {K: acc[0]/acc[K] for K in (1, 4, 8)}; pred = {8: 1.08, 4: 1.16, 1: 1.99}            # ⟨1/N³⟩ from journal entry (155)
 Ks = [8, 4, 1]; a.plot([pred[K] for K in Ks], [mI[K] for K in Ks], "o", color=V1, ms=7)
 for K in Ks: a.annotate(f"K = {K}", (pred[K], mI[K]), textcoords="offset points", xytext=(6, -10), fontsize=8)
 x = np.linspace(1, 2.5, 10); a.plot(x, x, "k--", lw=1, label="m_I/m = ⟨1/N³⟩"); a.axhline(1, color=GRAY, lw=1, label="equivalence principle")

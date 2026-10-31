@@ -1,4 +1,4 @@
-"""(175) порівняння dt = 0,0025 (r175/dt_s*) з dt = 0,005 (r173/A_s*): час першого світу, кількість світів, площа, когерентність, кипіння. Вихід cmp175.txt."""
+"""(175) comparison of dt = 0.0025 (r175/dt_s*) with dt = 0.005 (r173/A_s*): time of the first domain, number of domains, area, coherence, boiling. Output cmp175.txt."""
 import json, glob, numpy as np
 import os; S = os.environ.get("NM_RUNS", os.path.dirname(os.path.abspath(__file__)) + "/../runs/out/")
 def ld(p): return json.load(open(glob.glob(S + p)[0]))["w2"]

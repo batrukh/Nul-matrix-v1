@@ -1,5 +1,5 @@
-"""run166: речовина з пружністю (28.10). Повна жива модель (Φ★ + калібр. SO(5), вакуум-свідомий детектор, як rungd (120)) + пружне полотно ela139.
-Ключі пружності: ge= (γ), le= (ℓ); решта — параметри local60.run (ell=, g= тут — до-час τ і нахил, як у (120)). ck= — контрольна точка (од. часу)."""
+"""run166: matter with elasticity (28.10). Full live model (Φ★ + SO(5) gauge field, vacuum-aware detector, as rungd (120)) + elastic canvas ela139.
+Elasticity keys: ge= (γ), le= (ℓ); the rest are parameters of local60.run (ell=, g= here — pre-time τ and tilt, as in (120)). ck= — checkpoint (time units)."""
 import sys, os, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ela139 as E, local60 as M

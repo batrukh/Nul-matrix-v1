@@ -1,4 +1,4 @@
-"""(173) етап А: малюнок — запал народження (111), розподіл закрученості (112), відбір за розміром (113) зі стрілами ґратки (sk=4); (183)–(186) втручання в острів."""
+"""(173) stage A: figure — nucleation trigger (111), loop-phase distribution (112), selection by size (113) with lattice arrows (sk=4); (183)–(186) island intervention."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import json, re, numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 import sys; sys.path.insert(0, _H); from pstyle import V1

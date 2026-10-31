@@ -1,10 +1,10 @@
-"""grav150: постулат-кандидат (150), ідея автора 27.10 — зв'язок Первинного поля (нитки) і протополя Φ★.
-Ланки Φ★ і калібрувального поля лежать на тих самих нитках, що й нитки Матриці; жорсткість ланки ∝ натягу нитки:
-    H = Σ_l (1 + s_l)·(1/3)|U Φ' Uᵀ − Φ|² + Σ_tri (1 + s_tri)·kb·(5 − tr H) + [решта gauge91 без змін]
-        + (K/2)·Σ [ |∇s|² + s²/ℓ² ]          (s = (A − A₀)/A₀ — відносна зміна натягу; пружне полотно (139) як енергія натягу)
-Натяг підлаштовується швидко (адіабатично): s = −G·ρ/K, G = (−Δ + 1/ℓ²)⁻¹, ρ — густина «градієнтної» енергії Φ★ у вузлах
-(ланки + трикутники). ℓ = 0 означає ℓ = ∞ (Пуассон, без середнього). Ефективно: H_eff = H₀ − (1/2K)·ρ·G·ρ.
-Кінетичні члени (Π, E) і потенціал V не множаться: швидкість хвиль c² ∝ (1 + s)."""
+"""grav150: candidate postulate (150), author's idea of 27.10 — coupling of the Primary field (links) and the protofield Φ★.
+The links of Φ★ and of the gauge field lie on the same links as the Matrix links; the stiffness of a link ∝ its intensity:
+    H = Σ_l (1 + s_l)·(1/3)|U Φ' Uᵀ − Φ|² + Σ_tri (1 + s_tri)·kb·(5 − tr H) + [rest of gauge91 unchanged]
+        + (K/2)·Σ [ |∇s|² + s²/ℓ² ]          (s = (A − A₀)/A₀ — relative change of intensity; elastic substrate (139) as the strain energy)
+The strain adjusts fast (adiabatically): s = −G·ρ/K, G = (−Δ + 1/ℓ²)⁻¹, ρ — density of the "gradient" energy of Φ★ at the nodes
+(links + triangles). ℓ = 0 means ℓ = ∞ (Poisson, zero mean). Effectively: H_eff = H₀ − (1/2K)·ρ·G·ρ.
+Kinetic terms (Π, E) and the potential V are not multiplied: wave speed c² ∝ (1 + s)."""
 import os, sys, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/..")
 import gauge91 as G
@@ -12,7 +12,7 @@ from gauge91 import sh, put, T_, PA, tr, DIRS
 
 def kernel(L, ell):
     k = 2*np.pi*np.fft.fftfreq(L); kx, ky = k[:, None], k[None, :]
-    lam = 2*(3 - np.cos(kx) - np.cos(ky) - np.cos(kx - ky))       # −Δ трикутної ґратки з сусідами ±(1,0), ±(0,1), ±(−1,1)
+    lam = 2*(3 - np.cos(kx) - np.cos(ky) - np.cos(kx - ky))       # −Δ of the triangular lattice with neighbours ±(1,0), ±(0,1), ±(−1,1)
     if ell > 0: return 1.0/(lam + 1.0/ell**2)
     Gk = np.zeros_like(lam); Gk[lam > 1e-12] = 1.0/lam[lam > 1e-12]; return Gk
 
@@ -70,6 +70,6 @@ class GaugeA(G.Gauge):
         s.update_s(P, U, frozen)
         return super().step(P, Pi, U, E, dt, gam)
     def energy(s, P, Pi, U, E):
-        """H_eff = H₀ (без множників) + Σ s·ρ/2 при адіабатичному s; повертає (H_eff, H₀)."""
+        """H_eff = H₀ (without factors) + Σ s·ρ/2 for adiabatic s; returns (H_eff, H₀)."""
         sv = s.sn; s.sn = np.zeros_like(sv); s.update_s(P, U, frozen=s.sn); H0 = s.edens(P, Pi, U, E).sum(); s.sn = sv; s.update_s(P, U, frozen=sv)
         return H0 + 0.5*float((s.sn*s.rho(P, U)).sum()), H0

@@ -1,4 +1,4 @@
-"""life166: скільки живе посаджений вихор (gv=100) у пружному світі: йдемо за найближчим кластером (крок ≤ 3 за од.) від точки посадки."""
+"""life166: lifetime of a planted vortex (gv=100) in an elastic domain: we follow the nearest cluster (step ≤ 3 per unit) from the planting point."""
 import json, glob, numpy as np
 def wd(a, b, L=96):
     from math import hypot

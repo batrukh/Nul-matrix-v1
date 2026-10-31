@@ -1,5 +1,5 @@
-"""ana183: (183) чи народився світ у місці події після втручання. Зона — вузли на відстані ≤ R + 2 від центру нового світу.
-Світ «народився», якщо в якомусь кадрі t_k+1..t_k+15 у зоні ≥ 3 вузлів з ψ > 0. Для sham — те саме і в зоні підміненого диска."""
+"""ana183: (183) whether a domain was born at the event site after the intervention. Zone — nodes within R + 2 of the centre of the new domain.
+A domain is "born" if in some frame t_k+1..t_k+15 the zone has ≥ 3 nodes with ψ > 0. For sham — the same, also in the zone of the decoy disk."""
 import numpy as np, json, os, sys
 P = os.environ.get("R183_DIR", "."); L = 96
 i_, j_ = np.divmod(np.arange(L*L), L); X = i_ + j_/2; Y = j_*np.sqrt(3)/2

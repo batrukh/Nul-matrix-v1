@@ -1,9 +1,9 @@
-"""seam51: чи кипіння Матриці на правильній ґратці засіяне «швами» напрямків ниток (розд. 4.4 (51)).
-У simNlib.Fabric напрям нитки задається порядком створення: майже всі нитки дивляться в один бік, крім рядка 0 (горизонталі)
-і стовпця 0 (вертикалі), де напрям протилежний. З поворотом сили (α ≠ 0) напрям фізичний, тож шви — дефекти.
-mode=fresh: правильна ґратка без швів (шви перевернуто), старт із майже спокійної Матриці, ψ заморожене, T одиниць.
-mode=keep:  те саме зі швами (контроль).
-mode=heal:  спершу T/2 зі швами (Матриця закипає), потім шви перевертаються (z → z̄ на них, той самий фізичний стан) і ще T/2."""
+"""seam51: is the boiling of the Matrix on the regular lattice seeded by "seams" of link directions (sec. 4.4 (51)).
+In simNlib.Fabric the link direction is set by the creation order: almost all links point the same way, except row 0 (horizontal)
+and column 0 (vertical), where the direction is opposite. With a rotated force (α ≠ 0) the direction is physical, so the seams are defects.
+mode=fresh: regular lattice without seams (seams flipped), start from a nearly quiet Matrix, ψ frozen, T units.
+mode=keep:  the same with seams (control).
+mode=heal:  first T/2 with seams (the Matrix boils), then the seams are flipped (z → z̄ on them, the same physical state) and another T/2."""
 import numpy as np, sys, json, os
 os.environ.setdefault("DELTA", "1e-6")
 import stall43 as T, rnd51 as R, tile48 as TL
@@ -11,7 +11,7 @@ import stall43 as T, rnd51 as R, tile48 as TL
 def seams(fab):
     L = fab.L; xa, ya = fab.xy[fab.tail].T; xb, yb = fab.xy[fab.head].T
     dx = (xb - xa + L//2) % L - L//2; dy = (yb - ya + L//2) % L - L//2
-    return (dx == 1) & (dy == 0) | (dx == 0) & (dy == -1)        # проти напрямку решти ниток свого сімейства
+    return (dx == 1) & (dy == 0) | (dx == 0) & (dy == -1)        # against the direction of the other links of its family
 
 def run(mode="fresh", L=48, seed=1, Tt=200.0, dt=0.005, lc=1.3, h=0.3, noise=0.01):
     rng = np.random.default_rng(seed); r = np.roots([1, 0, -1, -h]); psiM = r[np.isreal(r)].real.min()

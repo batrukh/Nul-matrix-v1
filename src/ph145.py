@@ -1,12 +1,12 @@
-"""ph145: «фотон» на кінцевому стані живого прогону (як (92)), старт у найглибшій точці найбільшого світу.
-Пишемо частку енергії хвилі в усіх світах (fin) і у власному світі (fown) — з пружністю світи дрібні й сусідні."""
+"""ph145: "photon" on the final state of a live run (as (92)), starting at the deepest point of the largest domain.
+Writes the fraction of the wave energy in all domains (fin) and in its own domain (fown) — with elasticity the domains are small and adjacent."""
 import numpy as np, sys, os, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gauge91 as G, scipy.ndimage as nd
 from phi90 import coords
 src = sys.argv[1]; floor = float(sys.argv[2]); kind = sys.argv[3] if len(sys.argv) > 3 else "photon"
 psi = np.load(src)["psi"]; L = psi.shape[0]; B = psi > 0
-st = np.array([[0, 1, 1], [1, 1, 1], [1, 1, 0]])                       # сусіди трикутної ґратки (±(1,0), ±(0,1), ±(−1,1))
+st = np.array([[0, 1, 1], [1, 1, 1], [1, 1, 0]])                       # neighbours of the triangular lattice (±(1,0), ±(0,1), ±(−1,1))
 lab, n = nd.label(np.tile(B, (3, 3)), structure=st); lab = lab[L:2*L, L:2*L]
 sz = np.bincount(lab.ravel()); sz[0] = 0; big = int(np.argmax(sz))
 dist = nd.distance_transform_edt(np.tile(B, (3, 3)))[L:2*L, L:2*L]

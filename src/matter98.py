@@ -1,9 +1,9 @@
-"""matter98: речовина у світі, крок 2 — чи живуть топологічні збудження протополя Φ★ (без калібрувального поля, однорідний світ a = −1).
-Вакуум: власні значення u = −0,346 (×3), v = 0,518 (×2) → площина P (власний простір v) ∈ Gr(2,5).
-Кандидати: (1) Z₂-вихор (π₁ = Z₂): поворот на θ/2 у площині (e3, e4); пара вихорів на торі.
-           (2) згусток (π₂): площина = n^⊥ у R³ = span(e3, e4, e5), n — стереографічний образ (розмір λ), n → e3 на нескінченності.
-Міряємо: Z₂-дефекти (трикутники з голономією det = −1), заряд Q (сума кутів голономії площини / 2π), розмір згустку, енергію.
-Динаміка phi90: Φ̈ + γΦ̇ = ΔΦ − ∂V/∂Φ (Верле), спершу коротке тертя для очищення ядер."""
+"""matter98: matter in the domain, step 2 — do topological excitations of the protofield Φ★ survive (without the gauge field, uniform domain a = −1).
+Vacuum: eigenvalues u = −0.346 (×3), v = 0.518 (×2) → plane P (eigenspace of v) ∈ Gr(2,5).
+Candidates: (1) Z₂ vortex (π₁ = Z₂): rotation by θ/2 in the plane (e3, e4); a pair of vortices on the torus.
+           (2) lump (π₂): plane = n^⊥ in R³ = span(e3, e4, e5), n — stereographic image (size λ), n → e3 at infinity.
+We measure: Z₂ defects (triangles with holonomy det = −1), charge Q (sum of the holonomy angles of the plane / 2π), lump size, energy.
+Dynamics phi90: Φ̈ + γΦ̇ = ΔΦ − ∂V/∂Φ (Verlet), first a short friction phase to clean the cores."""
 import numpy as np, json, sys
 import phi90 as PH
 
@@ -13,7 +13,7 @@ def gen(i, j):
     G = np.zeros((5, 5)); G[i, j], G[j, i] = -1, 1; return G
 
 def rot(phi, i, j):
-    """exp(phi·G_ij) для поля кутів phi (L,L)"""
+    """exp(phi·G_ij) for the angle field phi (L,L)"""
     c, s = np.cos(phi), np.sin(phi); R = np.broadcast_to(np.eye(5), phi.shape + (5, 5)).copy()
     R[..., i, i] = c; R[..., j, j] = c; R[..., j, i] = s; R[..., i, j] = -s; return R
 
@@ -30,15 +30,15 @@ def wrapd(X, Y, cx, cy, L):
 def init(kind, L, lam=4.0, d=16.0):
     X, Y = PH.coords(L); cx, cy = X.mean(), Y.mean(); P0 = np.diag([U_]*3 + [V_]*2)
     if kind == "vortex":
-        dx1, dy1 = X - (cx - d/2), Y - cy; dx2, dy2 = X - (cx + d/2), Y - cy      # без згортання: розріз між вихорами, на краю тора лише мала дипольна нев'язка
-        # кут, що на торі неперервний за модулем 2π для пари (+, −): θ1 − θ2
+        dx1, dy1 = X - (cx - d/2), Y - cy; dx2, dy2 = X - (cx + d/2), Y - cy      # no wrapping: a cut between the vortices, at the torus edge only a small dipole mismatch
+        # angle that is continuous mod 2π on the torus for the pair (+, −): θ1 − θ2
         th = np.arctan2(dy1, dx1) - np.arctan2(dy2, dx2)
         R = rot(th/2, 2, 3)
         return R @ P0 @ np.swapaxes(R, -1, -2)
     if kind == "lump":
         r, dx, dy = wrapd(X, Y, cx, cy, L); den = r**2 + lam**2
-        n = np.stack([(r**2 - lam**2)/den, 2*lam*dx/den, 2*lam*dy/den], -1)      # компоненти на e3, e4, e5
-        # м'яко повертаємо до вакууму на краю тора, щоб не було шва
+        n = np.stack([(r**2 - lam**2)/den, 2*lam*dx/den, 2*lam*dy/den], -1)      # components along e3, e4, e5
+        # gently return to the vacuum at the torus edge, so that there is no seam
         w = np.clip((L/2 - 4 - r)/4, 0, 1)[..., None]; n = n*w + np.array([1.0, 0, 0])*(1 - w); n /= np.linalg.norm(n, axis=-1, keepdims=True)
         P = np.zeros((L, L, 5, 5)); idx = [2, 3, 4]
         for a in range(3):
@@ -48,13 +48,13 @@ def init(kind, L, lam=4.0, d=16.0):
     raise ValueError(kind)
 
 def planes(P):
-    w, v = np.linalg.eigh(P); return v[..., :, 3:]          # 2 найбільші власні вектори — площина v
+    w, v = np.linalg.eigh(P); return v[..., :, 3:]          # the 2 largest eigenvectors — the plane v
 
 def polar2(M):
     u, s, vt = np.linalg.svd(M); return u @ vt
 
 def holonomy(P):
-    """для кожного трикутника: det голономії площини (−1 — Z₂-дефект) і кут (для заряду)"""
+    """for each triangle: det of the plane holonomy (−1 — Z₂ defect) and the angle (for the charge)"""
     B = planes(P); out_det, out_ang = [], []
     tri = [((0, 0), (1, 0), (0, 1)), ((1, 0), (1, 1), (0, 1))]
     sh = lambda A, d: np.roll(A, (-d[0], -d[1]), axis=(0, 1))
@@ -68,7 +68,7 @@ def holonomy(P):
     return np.array(out_det), np.array(out_ang)
 
 def lumpQ(P):
-    """заряд згустку: n — найменший власний вектор блоку (e3,e4,e5), знак піднято BFS (RP² → S²), Q = Σ тілесних кутів / 4π; λ_eff з площі n_z < 0"""
+    """lump charge: n — the smallest eigenvector of the block (e3,e4,e5), sign lifted by BFS (RP² → S²), Q = Σ solid angles / 4π; λ_eff from the area n_z < 0"""
     L = P.shape[0]; w, v = np.linalg.eigh(P[..., 2:5, 2:5]); n = v[..., :, 0].copy()
     from collections import deque
     seen = np.zeros((L, L), bool); seen[0, 0] = True

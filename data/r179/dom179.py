@@ -1,4 +1,4 @@
-"""(179) чутливість детектора світу: поріг ψ (−0,2/0/+0,2) і мінімальний розмір кластера (3/5/10/20) на кінцевих станах вікна (176)+(178), L72."""
+"""(179) sensitivity of the domain detector: ψ threshold (−0.2/0/+0.2) and minimum cluster size (3/5/10/20) on the final states of the window runs (176)+(178), L72."""
 import numpy as np, glob, json
 from scipy.ndimage import label
 L = 72; STR = np.array([[1, 1, 0], [1, 1, 1], [0, 1, 1]])

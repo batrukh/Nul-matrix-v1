@@ -1,5 +1,5 @@
-"""Fig. 5 статті: світло в моделі v1. (a) tr Φ² на кінцевому стані (r173 B_pf1_s1, t = 200) і межі світів; (b) частка енергії «фотона»
-у всіх світах і у власному світі до T = 300 (r182, 4 запуски); (c) проходження крізь межу світу (r181); (d) дисперсія: (ω/ck − 1) від ka, лінійна теорія r124 (13 напрямків) і −(ka)²/96."""
+"""Fig. 5 of the paper: light in model v1. (a) tr Φ² on the final state (r173 B_pf1_s1, t = 200) and domain boundaries; (b) fraction of the photon energy
+in all domains and in the launching domain up to T = 300 (r182, 4 runs); (c) transmission through a domain boundary (r181); (d) dispersion: (ω/ck − 1) versus ka, linear theory r124 (13 directions) and −(ka)²/96."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import sys, json, glob, numpy as np; sys.path.insert(0, _H); from pstyle import *
 fig, ax = plt.subplots(2, 2, figsize=(11, 7.6)); ax = ax.ravel()

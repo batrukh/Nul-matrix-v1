@@ -1,8 +1,8 @@
-"""birth48: народжуваність світу в Матриці і чи кипить велика Матриця (черга № 35, розд. 4.4 (48)). Модель — stall43 (λ_c = 1,3), тор.
-Фаза 1 (Tw): ψ заморожене в Матриці, міряємо кипіння: середнє |z|², розкид |z|² по нитках, швидкість зміни |z|² (boil), безлад фаз |hol|.
-m0 = середнє |z|² за другу половину фази 1 (самоузгоджене, як у (42)–(45)).
-Фаза 2 (Tb): ψ відпущене, без посадженої бульбашки; щоодиниці часу — скільки вузлів у фазі локальності і скільки окремих зародків (≥ 5 вузлів).
-Народжуваність = кількість нових зародків / (кількість вузлів · час) до першого великого світу."""
+"""birth48: nucleation rate in the Matrix and whether a large Matrix boils (queue No. 35, sec. 4.4 (48)). Model — stall43 (λ_c = 1.3), torus.
+Phase 1 (Tw): ψ frozen in the Matrix, we measure boiling: mean |z|², spread of |z|² over links, rate of change of |z|² (boil), phase disorder |hol|.
+m0 = mean |z|² over the second half of phase 1 (self-consistent, as in (42)–(45)).
+Phase 2 (Tb): ψ released, no planted bubble; every time unit — how many nodes are in the local phase and how many separate nuclei (≥ 5 nodes).
+Nucleation rate = number of new nuclei / (number of nodes · time) up to the first large domain."""
 import numpy as np, sys, json, os
 os.environ.setdefault("DELTA", "1e-6")
 import stall43 as T

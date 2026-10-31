@@ -1,4 +1,4 @@
-"""wall166: де сидять вихори кінця прогону (166) — відстань до стінки Φ★|−Φ★ у світі (як (122)); контроль — випадкові вузли світу."""
+"""wall166: where the vortices at the end of run (166) sit — distance to the Φ★|−Φ★ wall in the domain (as (122)); control — random nodes of the domain."""
 import sys, os, json, glob, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/.."); import phi90 as PH, matter98 as M98
 L = 96; X, Y = PH.coords(L); rng = np.random.default_rng(0); out = {}

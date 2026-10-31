@@ -1,7 +1,7 @@
-"""ff155: інерційна маса вихору через вільне падіння в ЗОВНІШНЬОМУ градієнті натягу, коли вихор сидить у власній ямі.
-N = 1 + s_власне + s_зовн, s_зовн = g·(Ly/2π)·sin(2π(j − j0)/L) (dN/dy = g у ядрах, як ff152); s_власне — з джерела (153), K.
-Сила на вихор = −(енергія)·∇N ≈ −m·g; прискорення a = g·m/m_I → m_I/m = g/a. 20 од. тертя (з усім полем), далі 30 од. без тертя.
-K = 0 — без власної ями (як (152))."""
+"""ff155: inertial mass of a vortex from free fall in an EXTERNAL strain gradient while the vortex sits in its own well.
+N = 1 + s_own + s_ext, s_ext = g·(Ly/2π)·sin(2π(j − j0)/L) (dN/dy = g at the cores, as in ff152); s_own — from the source (153), K.
+Force on the vortex = −(energy)·∇N ≈ −m·g; acceleration a = g·m/m_I → m_I/m = g/a. 20 units with friction (with the whole field), then 30 units without friction.
+K = 0 — without its own well (as (152))."""
 import sys, os, json, numpy as np
 H = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, H)

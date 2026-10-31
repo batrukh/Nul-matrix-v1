@@ -1,9 +1,9 @@
-"""grav152: «метричний» зв'язок (151), прочитання «натяг × довжина»: поля Φ★ і калібрувальне живуть у метриці
-    ds² = −N²dt² + a²(dx² + dy²),  N = 1 + s (час з натягу, (25)),  a = N^(−q) (q = 1: збереження A·ℓ → γ = 1).
-Гамільтоніан (2D, на вузол / ланку / трикутник):
+"""grav152: "metric" coupling (151), reading "intensity × length": the fields Φ★ and the gauge field live in the metric
+    ds² = −N²dt² + a²(dx² + dy²),  N = 1 + s (time from intensity, (25)),  a = N^(−q) (q = 1: conservation of A·ℓ → γ = 1).
+Hamiltonian (2D, per node / link / triangle):
     Σ_n [ (N/a²)·½|Π|² + N·a²·V(Φ) ] + Σ_l [ N_l·(1/3)|UΦ'Uᵀ − Φ|² + (ka/(4N_l))|E|² ] + Σ_tri (N_t/a_t²)·kb·(5 − tr H)
-(Π — імпульс, Φ̇ = (N/a²)Π; E = U̇Uᵀ — швидкість, інерція ланки ka/N_l). s заморожене (пробне поле).
-Передбачення континууму: c = N/a, сповільнення часу ω ∝ N, статична енергія солітона = N·m, прискорення речовини −∇N, світло n = a/N."""
+(Π — momentum, Φ̇ = (N/a²)Π; E = U̇Uᵀ — velocity, link inertia ka/N_l). s is frozen (test field).
+Continuum prediction: c = N/a, time dilation ω ∝ N, static soliton energy = N·m, acceleration of matter −∇N, light n = a/N."""
 import os, sys, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/..")
 import gauge91 as G
@@ -14,11 +14,11 @@ class GaugeM(G.Gauge):
     def __init__(s, Nn, q=1.0, ka=1.0, kb=2.0, a=-1.0):
         L = Nn.shape[0]
         an = Nn**(-q)
-        s.mP = an**2/Nn                                            # інерція Φ★ у вузлі
-        s.cV = Nn*an**2                                            # множник потенціалу
+        s.mP = an**2/Nn                                            # inertia of Φ★ at a node
+        s.cV = Nn*an**2                                            # potential factor
         Nl = np.array([0.5*(Nn + sh(Nn, d)) for d in DIRS])
         Nt = np.array([(Nn + sh(Nn, DIRS[0]) + sh(Nn, DIRS[1]))/3, (sh(Nn, DIRS[0]) + sh(Nn, (1, 1)) + sh(Nn, DIRS[1]))/3])
-        super().__init__(np.full((L, L), a), 1.0/Nl, Nt**(1 + 2*q), ka, kb)   # wl = 1/N_l (інерція ланки), wt = N_t/a_t²
+        super().__init__(np.full((L, L), a), 1.0/Nl, Nt**(1 + 2*q), ka, kb)   # wl = 1/N_l (link inertia), wt = N_t/a_t²
         s.fl = Nl; s.Nn = Nn
     def forces(s, P, U):
         FP = -s.cV[..., None, None]*dV(P, s.a, s.b)

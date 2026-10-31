@@ -1,8 +1,8 @@
-"""grav153: метричний зв'язок (152) з власним джерелом. Натяг s — пружне полотно (139): H = H_m(N = 1 + s) + (K/2)·Σ[|∇s|² + s²/ℓ²],
-s підлаштовується швидко (адіабатично): K(−Δ + 1/ℓ²)s = −ρ, ρ = ∂H_m/∂N у вузлі — джерело випливає з тієї ж енергії, вільного вибору немає.
-Потенціал рахується від вакууму (V − V₀): вакуум не має енергії і не є джерелом (космологічний член = 0 — вибір).
-ρ (q = 1, a = 1/N): 3N²·½Π² (кін. Φ★) − (V − V₀)/N² + Σ_l ½·D-член + Σ_l ½·E-енергія/N_l + Σ_tri ⅓·3N_t²·kb(5 − tr H).
-Для статичного солітона при N = 1: ρ = град + 3·B − V, а за Деріком (V = B) ∫ρ = ∫(град + B + V) = m — уся маса."""
+"""grav153: metric coupling (152) with its own source. The strain s is the elastic substrate (139): H = H_m(N = 1 + s) + (K/2)·Σ[|∇s|² + s²/ℓ²],
+s adjusts fast (adiabatically): K(−Δ + 1/ℓ²)s = −ρ, ρ = ∂H_m/∂N at a node — the source follows from the same energy, there is no free choice.
+The potential is counted from the vacuum (V − V₀): the vacuum has no energy and is not a source (cosmological term = 0 — a choice).
+ρ (q = 1, a = 1/N): 3N²·½Π² (kin. Φ★) − (V − V₀)/N² + Σ_l ½·D-term + Σ_l ½·E-energy/N_l + Σ_tri ⅓·3N_t²·kb(5 − tr H).
+For a static soliton at N = 1: ρ = grad + 3·B − V, and by Derrick (V = B) ∫ρ = ∫(grad + B + V) = m — the whole mass."""
 import os, sys, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/..")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../r152")
@@ -45,7 +45,7 @@ class GaugeMS(GM.GaugeM):
             s.sn = -np.real(np.fft.ifft2(np.fft.fft2(r)*s.Gk))/s.K
         s.set_N(1.0 + s.sn)
     def settle(s, P, Pi, U, E, frozen=None, it=3):
-        """Самоузгоджене s (ітерації); E — швидкість, тож при зміні N зберігаємо канонічний імпульс ланки ∝ wl·E. Повертає новe E."""
+        """Self-consistent s (iterations); E is a velocity, so when N changes we keep the canonical link momentum ∝ wl·E. Returns the new E."""
         wl0 = s.wl.copy()
         for _ in range(it if frozen is None else 1): s.update_s(P, Pi, U, E*(wl0/s.wl)[..., None, None], frozen)
         return E*(wl0/s.wl)[..., None, None]
@@ -53,7 +53,7 @@ class GaugeMS(GM.GaugeM):
         E = s.settle(P, Pi, U, E, frozen, it)
         return GM.GaugeM.step(s, P, Pi, U, E, dt, gam)
     def energy(s, P, Pi, U, E):
-        """H_eff = H_m(N) + полотно; полотно = (K/2)·s·(−Δ+1/ℓ²)·s, рахуємо через FFT."""
+        """H_eff = H_m(N) + substrate; substrate = (K/2)·s·(−Δ+1/ℓ²)·s, computed via FFT."""
         Hm = s.edens(P, Pi, U, E).sum(); sk = np.fft.fft2(s.sn)
         lam = np.where(s.Gk > 0, 1.0/np.where(s.Gk > 0, s.Gk, 1), 0.0)
         return Hm + 0.5*s.K*float(np.real(np.sum(np.abs(sk)**2*lam))/s.L**2), Hm

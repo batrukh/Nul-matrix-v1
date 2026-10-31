@@ -1,9 +1,9 @@
-"""phi90: світло як безмасові моди протополя Φ★ (ідея автора 21.10.2026: спадковість через Первинне поле і протополе, секторизація;
-перевірка, не постулат). Φ★ — дійсна симетрична безслідова 5×5 на вузлах трикутної сітки (як (24), differ13), але з інерцією:
+"""phi90: light as massless modes of the protofield Φ★ (author's idea of 21.10.2026: heredity through the Primary field and the protofield, sectorisation;
+a check, not a postulate). Φ★ is a real symmetric traceless 5×5 matrix at the nodes of the triangular mesh (as (24), differ13), but with inertia:
     Φ̈ + γΦ̇ = c0²ΔΦ − ∂V/∂Φ + εB,   V = (a/2)trΦ² − (b/3)trΦ³ + (c/4)(trΦ²)² + (d/4)trΦ⁴,
-a(x) = a_m + (a_w − a_m)·χ(ψ), χ = (1 + tanh(ψ/0,2))/2: у світі (ψ > 0) a_w < 0 — Φ★ розщеплюється, у Матриці a_m > 0 — ні.
-ψ береться з готового стану local60 і заморожується (нитки z не чіпаємо: α на Φ★ не діє).
-Δ — трикутна сітка, 6 сусідів (±1,0),(0,±1),(1,−1),(−1,1), Δ = (2/3)Σ(Φn − Φ) (→ ∇² при малих k)."""
+a(x) = a_m + (a_w − a_m)·χ(ψ), χ = (1 + tanh(ψ/0.2))/2: in a domain (ψ > 0) a_w < 0 — Φ★ splits, in the Matrix a_m > 0 — it does not.
+ψ is taken from a finished local60 state and frozen (the links z are not touched: α does not act on Φ★).
+Δ — triangular mesh, 6 neighbours (±1,0),(0,±1),(1,−1),(−1,1), Δ = (2/3)Σ(Φn − Φ) (→ ∇² at small k)."""
 import numpy as np, json, sys
 
 NB = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, -1), (-1, 1)]
@@ -20,7 +20,7 @@ def dV(P, a, b=0.0, c=1.0, d=0.5):
     return sym0(a[..., None, None]*P - b*P2 + c*t2*P + d*(P2 @ P))
 
 def vacuum(a, b=0.0, c=1.0, d=0.5, seed=0):
-    """мінімум V для однієї матриці (градієнтний спуск з кількох стартів)"""
+    """minimum of V for a single matrix (gradient descent from several starts)"""
     best = None
     for s in range(20):
         P = sym0(np.random.default_rng(seed + s).standard_normal((5, 5)))
@@ -30,12 +30,12 @@ def vacuum(a, b=0.0, c=1.0, d=0.5, seed=0):
     return best[1]
 
 def hess(P0, a, B=None, eps=0.0, b=0.0, c=1.0, d=0.5, h=1e-5):
-    """гессіан −сили в 14-вимірному просторі безслідових симетричних матриць (ортонормований базис)"""
+    """Hessian of −force in the 14-dimensional space of traceless symmetric matrices (orthonormal basis)"""
     basis = []
     for i in range(5):
         for j in range(i, 5):
             M = np.zeros((5, 5)); M[i, j] = M[j, i] = 1; basis.append(M)
-    basis = [sym0(M) for M in basis]; Q = []                       # Грам–Шмідт
+    basis = [sym0(M) for M in basis]; Q = []                       # Gram–Schmidt
     for M in basis:
         for q in Q: M = M - np.sum(M*q)*q
         if np.linalg.norm(M) > 1e-9: Q.append(M/np.linalg.norm(M))
@@ -50,7 +50,7 @@ def relax(P, a, eps, B, T=60.0, dt=0.05, gam=1.0):
     return P
 
 def evolve(P, V, a, eps, B, dt, gam):
-    """швидкісний Верле"""
+    """velocity Verlet"""
     A = lap(P) - dV(P, a) + eps*B
     V = V + 0.5*dt*(A - gam*V); P = sym0(P + dt*V)
     A = lap(P) - dV(P, a) + eps*B
@@ -70,10 +70,10 @@ def tdist(X, Y, cx, cy, L):
 
 def kick_field(P, r, kind, amp, r0=2.0, gen=(0, 4)):
     th = amp*np.exp(-r**2/(2*r0**2))[..., None, None]
-    if kind == "gold":                                   # поворот (зламаний генератор) — голдстоунівський напрям
+    if kind == "gold":                                   # rotation (broken generator) — Goldstone direction
         G = np.zeros((5, 5)); i, j = gen; G[i, j], G[j, i] = 1, -1
         return P + th*(G @ P - P @ G)
-    return P + th*P                                       # «амплітудний» (масивний) напрям
+    return P + th*P                                       # "amplitude" (massive) direction
 
 def run(src="", L=48, aw=-1.0, am=1.0, eps=0.0, kind="gold", T=30.0, dt=0.05, gam=0.0, amp=0.01, seed=1, cen=""):
     rng = np.random.default_rng(seed)
@@ -82,7 +82,7 @@ def run(src="", L=48, aw=-1.0, am=1.0, eps=0.0, kind="gold", T=30.0, dt=0.05, ga
     else:
         psi = np.ones((L, L)) if aw is not None else None
     chi = 0.5*(1 + np.tanh(psi/0.2)); a = am + (aw - am)*chi
-    B = sym0(rng.standard_normal((5, 5))); B /= np.linalg.norm(B)          # успадкований від Матриці напрям (ε — сила)
+    B = sym0(rng.standard_normal((5, 5))); B /= np.linalg.norm(B)          # direction inherited from the Matrix (ε — strength)
     if src: P = relax(0.3*sym0(rng.standard_normal((L, L, 5, 5))), a, eps, B, T=120.0)
     else: P = relax(np.broadcast_to(vacuum(aw) if aw < 0 else np.zeros((5, 5)), (L, L, 5, 5)).copy(), a, eps, B, T=20.0)
     X, Y = coords(L)
@@ -99,7 +99,7 @@ def run(src="", L=48, aw=-1.0, am=1.0, eps=0.0, kind="gold", T=30.0, dt=0.05, ga
             inw = psi > 0; hot = e > 1e-3*e.max()
             rec.append(dict(t=round(t, 2), prof=[float(v) for v in prof], tot=float(e.sum()), fin=float(e[inw].sum()/e.sum()),
                             reach_w=float(r[hot & inw].max()) if (hot & inw).any() else 0.0, reach_m=float(r[hot & ~inw].max()) if (hot & ~inw).any() else 0.0))
-    # орієнтація законів: головний власний вектор блоку і з'ясування, чи однаковий він у різних світах
+    # orientation of the laws: the leading eigenvector of the block and whether it is the same in different domains
     ev = np.linalg.eigh(P)[1]
     name = f"phi90_{('src_' + src.split('/')[-1][:-4]) if src else 'uni'}_aw{aw:g}_am{am:g}_e{eps:g}_{kind}_g{gam:g}" + (f"_c{cen}" if cen else "")
     np.savez(name + ".npz", P=P, psi=psi, a=a)

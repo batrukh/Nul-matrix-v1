@@ -1,11 +1,11 @@
-"""nbforce: сила Sys.F (stall43 + M34.rhs з sim34d) одним компільованим проходом (numba). Та сама формула, той самий порядок
-підсумовування по сім'ях трикутників; збіг зі звичайним кодом — до похибки округлення (перевіряється в test_nb)."""
+"""nbforce: the force Sys.F (stall43 + M34.rhs from sim34d) in one compiled pass (numba). The same formula, the same order
+of summation over the triangle families; agreement with the plain code up to rounding error (checked in test_nb)."""
 import numpy as np
 from numba import njit
 
 @njit(cache=True)
 def _force(zr, zi, psi, tail, head, E1, S1, E2, S2, E3, S3, TV, g, mu, beta, eps0, h, kappa, d2, wp, lc, m0, csr, csi, ccr, cci):
-    # cci — масив по нитках (82): поворот 1 + iα_e може бути різним для різних ниток (плавна стріла)
+    # cci — per-link array (82): the rotation 1 + iα_e may differ between links (smooth arrow)
     m = zr.shape[0]; n = psi.shape[0]; nt = TV.shape[0]
     z = zr + 1j*zi
     A2 = zr*zr + zi*zi
@@ -22,7 +22,7 @@ def _force(zr, zi, psi, tail, head, E1, S1, E2, S2, E3, S3, TV, g, mu, beta, eps
         lap2[head[e]] += Ad[e]/wp*dps[e]
     for v in range(n):
         force[v] = kappa*(lap[v] - lap2[v]) - (psi[v]**3 - psi[v]) + h
-    # трикутники
+    # triangles
     b1r = np.zeros(m); b1i = np.zeros(m); b2r = np.zeros(m); b2i = np.zeros(m); b3r = np.zeros(m); b3i = np.zeros(m)
     w1r = np.zeros(m); w1i = np.zeros(m); w2r = np.zeros(m); w2i = np.zeros(m); w3r = np.zeros(m); w3i = np.zeros(m)
     cost = np.empty(nt)

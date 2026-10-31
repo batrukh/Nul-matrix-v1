@@ -1,7 +1,7 @@
-"""mat180: (180) спектр калібрувальної моди в Матриці (Φ = 0, a = +1, ваги ниток w = 0,02 — підлога варіанту «поле лише де протополе»).
-(а) лінійна теорія: ваги w множать і кінетичну (ka·w), і магнітну (kb·w) частину → ω² = 2kb/ka·C†C, від w не залежить;
-    Φ = 0 не ламає SO(5) → усі 10 генераторів безмасові, та сама дисперсія, що в «фотона» світу (124).
-(б) перевірка повним нелінійним кодом gauge91 (той самий інтегратор): плоска хвиля для трьох генераторів, ваги 1 і 0,02, мала й велика амплітуда."""
+"""mat180: (180) spectrum of the gauge mode in the Matrix (Φ = 0, a = +1, link weights w = 0.02 — the floor of the variant "field only where the protofield is").
+(a) linear theory: the weights w multiply both the kinetic (ka·w) and the magnetic (kb·w) parts → ω² = 2kb/ka·C†C, independent of w;
+    Φ = 0 does not break SO(5) → all 10 generators are massless, with the same dispersion as the domain "photon" (124).
+(b) check with the full nonlinear gauge91 code (the same integrator): plane wave for three generators, weights 1 and 0.02, small and large amplitude."""
 import numpy as np, json, sys
 import gauge91 as G
 from disp124 import kcart, bloch
@@ -13,7 +13,7 @@ def run_wave(m1, m2, L=24, kind="photon", w=0.02, am=1.0, amp=1e-3, dt=0.05, npe
     k = kcart(m1, m2, L); wl, v = bloch(k, ka, kb); pol = v[:, 1]
     i, j = np.meshgrid(np.arange(L), np.arange(L), indexing="ij"); ph = np.exp(2j*np.pi*(m1*i + m2*j)/L)
     mode = np.array([np.real(pol[m]*ph) for m in range(3)]); mode /= np.sqrt((mode**2).sum())
-    amp_ = amp*np.sqrt(3*L*L)                                               # amp — типовий кут на ланці
+    amp_ = amp*np.sqrt(3*L*L)                                               # amp — typical angle on a link
     U = np.array([G.cayley((amp_*mode[m])[..., None, None]*Gk) for m in range(3)]); E = np.zeros((3, L, L, 5, 5)); Pi = np.zeros_like(P)
     T = nper*2*np.pi/wl[1]; nst = int(round(T/dt)); q = np.empty(nst + 1)
     th = lambda U: 0.5*(U[..., pair[0], pair[1]] - U[..., pair[1], pair[0]])
@@ -35,7 +35,7 @@ if __name__ == "__main__":
         for kind in ("photon", "gluon", "broken"):
             for w in (1.0, 0.02):
                 r = run_wave(*m, L=L, kind=kind, w=w); out.append(r); print(r, flush=True)
-    for amp in (0.05, 0.2, 0.5):                                            # нелінійність (неабелева самодія)
+    for amp in (0.05, 0.2, 0.5):                                            # nonlinearity (non-abelian self-interaction)
         for kind in ("photon", "broken"):
             r = run_wave(1, 0, L=L, kind=kind, w=0.02, amp=amp); out.append(r); print(r, flush=True)
     json.dump(out, open(f"mat180_L{L}.json", "w"))

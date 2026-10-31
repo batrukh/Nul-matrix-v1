@@ -1,7 +1,7 @@
-"""ana69: № 69 (розд. 4.4 (134)). Базова модель local60 без швів (sk=4), s0=3,5, n=100, T250; L = 48, 72, 96, 144.
-Нові прогони — r69/; наявні контролі — ../s52/r129 (L96 сіди 1–2) і ../s52/r46 (L144 сіди 1–3).
-Для кожного прогону: світи наприкінці (final, ≥ 20 вузлів), частка вузлів у світах, густина світів на 1000 вузлів,
-кипіння і запас поза світами (Aout) наприкінці, хід nuc(t), big(t)/L²."""
+"""ana69: No. 69 (sec. 4.4 (134)). Reference model local60 without seams (sk=4), s0=3.5, n=100, T250; L = 48, 72, 96, 144.
+New runs — r69/; existing controls — ../s52/r129 (L96 seeds 1–2) and ../s52/r46 (L144 seeds 1–3).
+For each run: domains at the end (final, ≥ 20 nodes), fraction of nodes in domains, domain density per 1000 nodes,
+boiling and budget outside domains (Aout) at the end, the course of nuc(t), big(t)/L²."""
 import json, glob, sys, collections
 import numpy as np
 P = sys.argv[1] if len(sys.argv) > 1 else "."
@@ -15,10 +15,10 @@ for fn in sorted(fs):
                      boil=last.get("boil"), Aout=last.get("Aout"), Ain=last.get("Ain"), tr=tr, src=(fn.split("/")[-2] if "/" in fn else "r69")))
 by = collections.defaultdict(list)
 for r in rows: by[r["L"]].append(r)
-print("L  seed  світів  частка  густ/1000  найбільший  кипіння  Aout  Ain  розміри")
+print("L  seed  domains  fraction  dens/1000  largest  boiling  Aout  Ain  sizes")
 for L in sorted(by):
     for r in sorted(by[L], key=lambda r: r["seed"]):
         print(f"{L:3d} {r['seed']:2d} {r['nw']:4d} {r['frac']:6.2f} {r['dens']:7.2f} {r['big']:7.2f} {r['boil'] or 0:7.3f} {r['Aout'] or 0:5.2f} {r['Ain'] or 0:5.2f}  {r['sizes'][:8]}")
     a = lambda k: np.array([r[k] for r in by[L]], float)
-    print(f"  L{L} середнє: світів {a('nw').mean():.1f}±{a('nw').std():.1f}, частка {a('frac').mean():.2f}±{a('frac').std():.2f}, густина {a('dens').mean():.2f}, найбільший {a('big').mean():.2f}")
+    print(f"  L{L} mean: domains {a('nw').mean():.1f}±{a('nw').std():.1f}, fraction {a('frac').mean():.2f}±{a('frac').std():.2f}, density {a('dens').mean():.2f}, largest {a('big').mean():.2f}")
 json.dump(rows, open("r69/ana69.json", "w"))

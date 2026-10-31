@@ -1,5 +1,5 @@
-"""Fig. 2 статті: режими запасу. (a) карта ψ моделі v1 при s0 = 3,5 (r173, L96, t = 100); (b) частка у світах; (c) кипіння.
-Дані: без пружності — r130/ana130.json (L96, 2 сіди, t ≥ 150); v1 — ela/win (L72, сід 1, t ≥ 100) і ela/sizeL/L72_s1 (s0 = 3,5)."""
+"""Fig. 2 of the paper: budget regimes. (a) ψ map of model v1 at s0 = 3.5 (r173, L96, t = 100); (b) domain fraction; (c) boiling.
+Data: without elasticity — r130/ana130.json (L96, 2 seeds, t ≥ 150); v1 — ela/win (L72, seed 1, t ≥ 100) and ela/sizeL/L72_s1 (s0 = 3.5)."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import sys, json, ast, numpy as np; sys.path.insert(0, _H); from pstyle import *
 def load(fn): s = open(fn).read(); i = s.index('{'); return ast.literal_eval(s[i:s.rindex('}') + 1])

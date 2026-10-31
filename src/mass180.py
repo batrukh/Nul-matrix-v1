@@ -1,6 +1,6 @@
-"""mass180: (180б) місцева «маса» калібрувальних мод від залишкового Φ на справжньому знімку v1 (r173, етап Б, T200).
-Хіггсова кривизна ланки (2/3)|[G,Φ']|² ділиться на кінетичну вагу ka·w/2 → m² = (2/3)|[G,Φ']|²/(ka·w); мала вага Матриці ПІДСИЛЮЄ внесок Φ.
-Беремо найбільше власне значення 10×10 матриці по генераторах SO(5) (найважча мода) і найменше (найлегша)."""
+"""mass180: (180b) local "mass" of the gauge modes from the residual Φ on a real v1 snapshot (r173, stage B, T200).
+The Higgs curvature of a link (2/3)|[G,Φ']|² is divided by the kinetic weight ka·w/2 → m² = (2/3)|[G,Φ']|²/(ka·w); the small weight of the Matrix ENHANCES the contribution of Φ.
+We take the largest eigenvalue of the 10×10 matrix over the SO(5) generators (heaviest mode) and the smallest (lightest)."""
 import numpy as np, sys, json
 from scipy.ndimage import distance_transform_edt
 from gauge91 import gen, DIRS, sh
@@ -14,7 +14,7 @@ for m, dd in enumerate(DIRS):
     M = np.einsum("a...ij,b...ij->...ab", C, C)                          # Gram
     ev = np.linalg.eigvalsh(M)                                           # (L, L, 10)
     out[m] = (2/3)*ev/(wl[..., None])
-m2 = np.mean([out[m] for m in range(3)], axis=0)                         # середнє по трьох напрямках ланок
+m2 = np.mean([out[m] for m in range(3)], axis=0)                         # mean over the three link directions
 mat = psi < 0; dist = distance_transform_edt(mat); dw = distance_transform_edt(~mat)
 res = dict(file=f.split("/")[-1], frac_matrix=float(mat.mean()))
 rows = []
@@ -27,7 +27,7 @@ s = (~mat) & (dw > 3)
 if s.any(): rows.append(dict(depth="world>3", n=int(s.sum()), m2_heavy_med=float(np.median(m2[s][:, -1])), m2_light_med=float(np.median(m2[s][:, 0])),
                              m2_sorted_med=[float(x) for x in np.median(m2[s], axis=0)]))
 res["rows"] = rows; print(json.dumps(res, indent=1)); json.dump(res, open("mass180_" + res["file"].replace(".npz", ".json"), "w"))
-# профіль за відстанню від межі світу (від'ємна — всередині світу), медіани легких 4 і важких 6 мод
+# profile versus distance from the domain boundary (negative — inside the domain), medians of the 4 light and 6 heavy modes
 sd = np.where(mat, dist, -dw); prof = []
 for r in range(-6, 21):
     s = (np.round(sd) == r)

@@ -1,7 +1,7 @@
-"""ana166: речовина з пружністю проти (120) без пружності. Для кожного прогону: вихори (вакуум-свідомий детектор) при t ≥ 150, народження
-(кластер без попередника ближче 2 у попередньому кадрі) на 1000 трикутників світу за од., площа світу, частка −Φ★ (f3), кількість світів."""
+"""ana166: matter with elasticity versus (120) without elasticity. For each run: vortices (vacuum-aware detector) at t ≥ 150, births
+(cluster with no predecessor closer than 2 in the previous frame) per 1000 domain triangles per unit time, domain area, fraction of −Φ★ (f3), number of domains."""
 import json, glob, re, numpy as np, sys, os
-R120 = os.environ.get("NM_R120", "")   # дані (120) без пружності; порожньо — порівняння пропускається
+R120 = os.environ.get("NM_R120", "")   # data of (120) without elasticity; empty — the comparison is skipped
 def wd(a, b, L=96):
     d = np.abs(a - b); d = np.minimum(d, L - d); return np.hypot(*d.T) if d.ndim > 1 else np.hypot(*d)
 def stats(track, w2=None, t0=150):

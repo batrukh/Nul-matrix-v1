@@ -1,4 +1,4 @@
-"""(111): чи є в 3D-Матриці «протосвіти» — пласкі ділянки ниток з інтенсивністю, близькою до вакууму світу (ознаки місць народження у 2D)."""
+"""(111): whether the 3D Matrix has "protodomains" — flat patches of links with intensity close to the domain vacuum (features of birth sites in 2D)."""
 import os; os.environ["NB"]="0"
 import numpy as np, json, local60 as LC, fab3d as F, rnd51 as R
 def node_feats(f, z):
@@ -7,7 +7,7 @@ def node_feats(f, z):
     for j in range(3): np.add.at(tn,f.TV[:,j],hol); np.add.at(tc,f.TV[:,j],1)
     return A, tn/tc
 out={}
-# 2D: Матриця (ψ < 0) у знімках t = 10..60, 4 реалізації
+# 2D: Matrix (ψ < 0) in frames t = 10..60, 4 realisations
 s=LC.Loc(L=96,h=0.3,lc=1.3); f=s.fab; t0,h0=f.tail.copy(),f.head.copy()
 H2=[];A2_=[]
 for sd in (1,2,3,4):

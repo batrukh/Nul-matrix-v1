@@ -1,4 +1,4 @@
-"""Fig. 7 статті: дірка в полотні v1 як засів світу (177). (a) карта R × q при s0 = 4.5; (b) ψ біля дірки; (c) радіальний профіль інтенсивності; (d) у вікні s0 = 3.5."""
+"""Fig. 7 of the paper: a hole in the v1 substrate seeding a domain (177). (a) map R × q at s0 = 4.5; (b) ψ near the hole; (c) radial intensity profile; (d) inside the window s0 = 3.5."""
 import sys, json, glob, numpy as np; sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__))); from pstyle import *
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); D_ = _os.environ.get("NM_DATA", _H + "/../data/")
 sys.path.insert(0, _H + "/../src"); import ana177 as A

@@ -1,4 +1,4 @@
-"""(170) протосвіти 3D: розміри зв'язних пласких інтенсивних ділянок (|гол.| < 0,35, |z|² > 5) і ψ у них; L16 (117) проти L24 (170)."""
+"""(170) 3D protodomains: sizes of connected flat intense patches (|hol| < 0.35, |z|² > 5) and ψ in them; L16 (117) versus L24 (170)."""
 import os; os.environ["NB"] = "0"
 import numpy as np, json, sys, fabgen as G
 def ana(path, L):

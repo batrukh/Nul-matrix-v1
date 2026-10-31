@@ -1,5 +1,5 @@
-"""fftk: швидке K s = P^n s на правильній трикутній ґратці-торі через FFT (P трансляційно-інваріантний: 3 сім'ї ниток).
-Точно рівне n множенням на P (перевіряється при побудові)."""
+"""fftk: fast K s = P^n s on the regular triangular torus lattice via FFT (P is translation invariant: 3 link families).
+Exactly equal to n multiplications by P (checked at construction)."""
 import numpy as np
 def build(f, L, P, n):
     xa, ya = f.xy[f.tail].T; xb, yb = f.xy[f.head].T
@@ -14,14 +14,14 @@ def build(f, L, P, n):
         if (a, b) in canon: fam[i] = canon.index((a, b)); X[i], Y[i] = xa[i], ya[i]
         else: fam[i] = canon.index((-a, -b)); X[i], Y[i] = xb[i], yb[i]
     idx = np.full((3, L, L), -1); idx[fam, X, Y] = np.arange(f.m); assert (idx >= 0).all()
-    # ядро: відгук P на одиничну нитку кожної сім'ї в (0,0)
+    # kernel: response of P to a unit link of each family at (0,0)
     Kr = np.zeros((3, 3, L, L))
     for c in range(3):
         e = np.zeros(f.m); e[idx[c, 0, 0]] = 1; r = P @ e
         Kr[:, c] = r[idx]
     Kk = np.fft.fft2(Kr)                       # (3,3,L,L)
     M = np.moveaxis(Kk, (0, 1), (2, 3))        # (L,L,3,3)
-    Mn = np.ascontiguousarray(np.linalg.matrix_power(M, n)[:, :L//2 + 1])   # дійсний вхід: досить половини частот
+    Mn = np.ascontiguousarray(np.linalg.matrix_power(M, n)[:, :L//2 + 1])   # real input: half of the frequencies suffices
     def apply(s):
         S = np.fft.rfft2(s[idx])               # (3,L,L/2+1)
         out = np.fft.irfft2(np.einsum('xyab,bxy->axy', Mn, S), s=(L, L))

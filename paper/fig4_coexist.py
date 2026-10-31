@@ -1,8 +1,8 @@
-"""Fig. 4 статті: злиття без пружності проти співіснування в моделі v1.
-(a) число світів у часі, L96: без пружності r69 (s3, s4, T250) проти v1 ela/L96_l8_g0.01_s3,s4 (T600);
-(b) частка найбільшого світу, L72: без пружності і v1 при різних P (ela/map, ℓ = 8);
-(c) карта (P, ℓ): ріст найбільшого світу t 100–150 (колір) і число світів (ela/map);
-(d) густина світів і медіана розміру проти L (ela/sizeL/sizeL.json, v1)."""
+"""Fig. 4 of the paper: merging without elasticity versus coexistence in model v1.
+(a) number of domains in time, L96: without elasticity r69 (s3, s4, T250) versus v1 ela/L96_l8_g0.01_s3,s4 (T600);
+(b) fraction of the largest domain, L72: without elasticity and v1 at several P (ela/map, ℓ = 8);
+(c) map (P, ℓ): growth of the largest domain over t 100–150 (colour) and number of domains (ela/map);
+(d) domain density and median size versus L (ela/sizeL/sizeL.json, v1)."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import sys, json, ast, numpy as np; sys.path.insert(0, _H); from pstyle import *
 def load(fn): s = open(fn).read(); i = s.index('{'); return ast.literal_eval(s[i:s.rindex('}') + 1])

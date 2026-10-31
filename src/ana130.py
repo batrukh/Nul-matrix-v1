@@ -1,5 +1,5 @@
-"""ana130: запас натягу → кипіння і світи в Матриці без дефектів (розд. 4.4 (130)). local60 sk=4, L96, n=100, T=250, 2 реалізації.
-Середнє за t ≥ 150: кипіння, частка Матриці у світах, число світів (≥ 20 вузлів), найбільший, натяг у світі й поза ним; час першого ядра і закипання."""
+"""ana130: intensity budget → boiling and domains in a defect-free Matrix (sec. 4.4 (130)). local60 sk=4, L96, n=100, T=250, 2 realisations.
+Averages over t ≥ 150: boiling, Matrix fraction in domains, number of domains (≥ 20 nodes), largest, intensity in and outside domains; time of the first nucleus and of boiling onset."""
 import numpy as np, json, glob
 import ana53 as A, birth48 as BR
 

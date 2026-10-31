@@ -1,12 +1,12 @@
-"""(112): двостійкість ниток Матриці у 2D (гіпотеза після (111)). Знімки local60 sn=1, 4 реалізації, t = 10..60.
-Вузли Матриці (ψ < −0,3), далі d від усіх світів. (а) розподіл у площині «закрученість |гол.| — інтенсивність |z|²»;
-(б) дрейф: середня зміна закрученості за 1 од. часу залежно від поточної (нулі з від'ємним нахилом — стійкі стани, з додатним — поріг);
-(в) пласкі ділянки (|гол.| < 0,35, ≥ 5 вузлів): скільки живуть і чим закінчуються (світ або розчинення)."""
+"""(112): bistability of Matrix links in 2D (hypothesis after (111)). Frames local60 sn=1, 4 realisations, t = 10..60.
+Matrix nodes (ψ < −0.3), farther than d from all domains. (a) distribution in the plane "twist |hol| — intensity |z|²";
+(b) drift: mean change of twist per time unit versus the current value (zeros with negative slope — stable states, with positive slope — a threshold);
+(c) flat patches (|hol| < 0.35, ≥ 5 nodes): how long they live and how they end (domain or dissolution)."""
 import os; os.environ["NB"] = "0"
 import numpy as np, json, local60 as LC
 from scipy.ndimage import distance_transform_edt as edt, label
 from diag111 import node_feats
-L = 96; ST = np.array([[1, 1, 0], [1, 1, 1], [0, 1, 1]])         # сусіди трикутної ґратки в індексах (i, j)
+L = 96; ST = np.array([[1, 1, 0], [1, 1, 1], [0, 1, 1]])         # triangular-lattice neighbours in indices (i, j)
 s = LC.Loc(L=L, h=0.3, lc=1.3); f = s.fab; t0, h0 = f.tail.copy(), f.head.copy()
 def lab_periodic(M):
     lb, n = label(np.tile(M, (3, 3)), structure=ST); c = lb[L:2*L, L:2*L]; return c
@@ -30,7 +30,7 @@ for sd in (1, 2, 3, 4):
         if k + 5 < T:
             m = M[k]; b = np.clip(np.digitize(HH[k][m], Hb) - 1, 0, 39)
             dh5_sum += np.bincount(b, HH[k + 5][m] - HH[k][m], 40); dh5_n += np.bincount(b, None, 40)
-    # (в) пласкі ділянки Матриці: життя і доля
+    # (c) flat Matrix patches: lifetime and fate
     flat = [((HH[k] < 0.35) & (PS[k] < 0) & far[k]).reshape(L, L) for k in range(T)]
     labs = [lab_periodic(F_) for F_ in flat]
     for k in range(10, T - 1):
@@ -38,7 +38,7 @@ for sd in (1, 2, 3, 4):
             if c == 0: continue
             m = labs[k] == c
             if m.sum() < 5: continue
-            if k > 10 and (flat[k - 1] & m).sum() >= 0.5*m.sum(): continue   # беремо лише нові ділянки
+            if k > 10 and (flat[k - 1] & m).sum() >= 0.5*m.sum(): continue   # only new patches
             life = 0; fate = "open"; mm = m
             for j in range(k + 1, T):
                 if (PS[j].reshape(L, L)[mm] > 0).mean() > 0.5: fate = "world"; break

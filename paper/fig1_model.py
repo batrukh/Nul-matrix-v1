@@ -1,5 +1,5 @@
-"""Fig. 1 статті: схема моделі v1. (a) фрагмент трикутної мережі: нитки z_e зі стрілами, вузли ψ_i, петля P_t трикутника;
-(b) шари моделі: Матриця (ψ_M), світ (ψ_W) з полем Φ★, розтяг полотна e(r) довкола світу (∝ ln r при r ≪ ℓ, e^(−r/ℓ) далі)."""
+"""Fig. 1 of the paper: scheme of model v1. (a) fragment of the triangular network: links z_e with arrows, nodes ψ_i, loop P_t of a triangle;
+(b) layers of the model: Matrix (ψ_M), domain (ψ_W) with the field Φ★, substrate strain e(r) around the domain (∝ ln r for r ≪ ℓ, e^(−r/ℓ) beyond)."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import sys, numpy as np; sys.path.insert(0, _H); from pstyle import *
 from scipy.special import k0

@@ -1,4 +1,4 @@
-"""Fig. 6 статті: Z₂-вихори в моделі v1. (a) кількість вихорів у часі (174, стріли ґратки) проти (166, стріли τ); (b) підсумок: газ при t ≥ 150 і життя посадженого вихора."""
+"""Fig. 6 of the paper: Z₂ vortices in model v1. (a) number of vortices in time (174, lattice arrows) versus (166, τ arrows); (b) summary: gas at t ≥ 150 and lifetime of a planted vortex."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import sys, json, glob, numpy as np; sys.path.insert(0, _H); from pstyle import *
 fig, ax = plt.subplots(1, 2, figsize=(10, 3.6), gridspec_kw={"width_ratios": [1.5, 1]})

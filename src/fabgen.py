@@ -1,10 +1,10 @@
-"""fabgen (114): загальна 3D-сітка трикутників на кубічному торі L³ — для перевірки гіпотези «у 3D трикутників більше, ніж ниток».
-Нитки — типи u ∈ U (id = t·n + вузол). Трикутники — трійки (x, x+u, x+v), u, v, v−u ∈ ±U, з фільтром:
-  'all'    — усі (FCC: 8 трикутників і 6 ниток на вузол, 8:6);
-  'planar' — лише в координатних площинах (ті самі 6 ниток, 6 трикутників, 6:6);
-  'layer'  — нитки e1, e2, e3, e1−e2, e1−e3, трикутники в площинах xy і xz (5 ниток, 4 трикутники, 4:5; у 2D 3:2 → 2:3);
-  'tet'    — (117) тетраедрична сітка Куна: нитки e1, e2, e3, e1+e2, e2+e3, e1+e3, e1+e2+e3, кожен кубик = 6 тетраедрів, усі клітинки — тетраедри (7 ниток, 12 трикутників на вузол).
-Місцевий закон P = I − (D − A)/(1 + d_max) (подвійно стохастична при будь-якій кількості сусідів нитки; на правильній 2D-ґратці — те саме, що (I + A)/5)."""
+"""fabgen (114): general 3D triangle mesh on the cubic torus L³ — to test the hypothesis "in 3D there are more triangles than links".
+Links — types u ∈ U (id = t·n + node). Triangles — triples (x, x+u, x+v), u, v, v−u ∈ ±U, with a filter:
+  'all'    — all of them (FCC: 8 triangles and 6 links per node, 8:6);
+  'planar' — only in coordinate planes (the same 6 links, 6 triangles, 6:6);
+  'layer'  — links e1, e2, e3, e1−e2, e1−e3, triangles in the xy and xz planes (5 links, 4 triangles, 4:5; in 2D 3:2 → 2:3);
+  'tet'    — (117) Kuhn tetrahedral mesh: links e1, e2, e3, e1+e2, e2+e3, e1+e3, e1+e2+e3, each cube = 6 tetrahedra, all cells are tetrahedra (7 links, 12 triangles per node).
+Local law P = I − (D − A)/(1 + d_max) (doubly stochastic for any number of link neighbours; on the regular 2D lattice the same as (I + A)/5)."""
 import numpy as np, scipy.sparse as sp
 import simNlib as N
 LATT = {"all": [(1, 0, 0), (0, 1, 0), (0, 0, 1), (1, -1, 0), (0, 1, -1), (1, 0, -1)],
@@ -24,10 +24,10 @@ class FabricG(N.Fabric):
                 if tuple(u) == tuple(-w): return t*n + idx(I[x] + u), -np.ones_like(x)
         def keep(u, v):
             if kind in ("all", "tet"): return True
-            M = np.array([u, v]); zero = (M == 0).all(0)                 # координата, що дорівнює 0 в обох векторах → площина
+            M = np.array([u, v]); zero = (M == 0).all(0)                 # coordinate equal to 0 in both vectors → plane
             if not zero.any(): return False
             if kind == "planar": return True
-            return zero[2] or zero[1]                                     # layer: площини xy (z = 0) і xz (y = 0)
+            return zero[2] or zero[1]                                     # layer: planes xy (z = 0) and xz (y = 0)
         tri = set(); TV = []; T = []; x = np.arange(n)
         for a, u in enumerate(nbv):
             for b, v in enumerate(nbv):
@@ -38,8 +38,8 @@ class FabricG(N.Fabric):
                         if k_ in tri: continue
                         tri.add(k_); TV.append((j, q[j], r[j])); T.append((e1[j], s1[j], e2[j], s2[j], e3[j], s3[j]))
         T = np.array(T); s.E1, s.S1, s.E2, s.S2, s.E3, s.S3 = T.T; s.TV = np.array(TV); s.ntri = len(T)
-        s.ktri = np.bincount(np.r_[s.E1, s.E2, s.E3], None, s.m)           # трикутників на нитку
-        s.tnode = np.bincount(s.TV.ravel(), None, n)                        # трикутників на вузол
+        s.ktri = np.bincount(np.r_[s.E1, s.E2, s.E3], None, s.m)           # triangles per link
+        s.tnode = np.bincount(s.TV.ravel(), None, n)                        # triangles per node
         s.deg = np.bincount(s.tail, None, n) + np.bincount(s.head, None, n)
         s.xy = I; s.pos = I.astype(float)
     def wilson(s, z): return (0.0, 0.0)
