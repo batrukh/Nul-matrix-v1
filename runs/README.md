@@ -18,3 +18,4 @@ Single-threaded per run; use `xargs -P <cores>` for several seeds.
 | `island.sh` | Sec. 4.2 | intervention in coherent islands: 3 time units before each of 40 nucleations, link phases in a disk R = 6 randomised / noised (0.5 rad) / randomised elsewhere; was the domain born at its site within 15 units (183) |
 | `island_radius.sh` | Sec. 4.2, Fig. 3d | random link phases in disks of radius 9 and 12 for the events of `island.sh` (184) |
 | `island_psi.sh` | Sec. 4.2, Fig. 3d | ψ reset to the Matrix level in a disk of radius 9, alone and with random link phases (185) |
+| `island_amp.sh` | Sec. 4.2, Fig. 3d | link intensities in a disk of radius 9 replaced by Matrix values, alone / with random phases / with phases and ψ (186) |

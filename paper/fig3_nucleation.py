@@ -1,4 +1,4 @@
-"""(173) етап А: малюнок — запал народження (111), розподіл закрученості (112), відбір за розміром (113) зі стрілами ґратки (sk=4); (183)–(185) втручання в острів."""
+"""(173) етап А: малюнок — запал народження (111), розподіл закрученості (112), відбір за розміром (113) зі стрілами ґратки (sk=4); (183)–(186) втручання в острів."""
 import os as _os; _H = _os.path.dirname(_os.path.abspath(__file__)); S = _os.environ.get("NM_DATA", _H + "/../data/")
 import json, re, numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 import sys; sys.path.insert(0, _H); from pstyle import V1
@@ -17,12 +17,15 @@ s_b = [r["size"] for r in rows if r["born"]]; s_n = [r["size"] for r in rows if 
 bins = np.logspace(np.log10(3), np.log10(5000), 30)
 ax[2].hist(s_n, bins, histtype="step", lw=2, label="did not nucleate", weights=np.full(len(s_n), 1/len(s_n))); ax[2].hist(s_b, bins, histtype="step", lw=2, label="nucleated a domain", weights=np.full(len(s_b), 1/len(s_b))); ax[2].set_ylabel("fraction of patches in class")
 ax[2].set_xscale("log"); ax[2].set_xlabel("flat patch size (nodes)"); ax[2].set_title("(c) selection by size (min 73, AUC 0.97)"); ax[2].legend(fontsize=8)
-rw = json.load(open(S + "r183/ana183.json")); rb = json.load(open(S + "r184/ana184.json")); rc = json.load(open(S + "r185/ana185.json"))
-for r, q, u in zip(rw, rb, rc): r["scr9"], r["scr12"], r["psi9"], r["psiscr9"] = q["scr9"], q["scr12"], u["psi"], u["psiscr"]
-V = [("ctl", "unchanged", V1), ("pn", "noise\n0.5 rad", "#e1a03a"), ("scr", "random\nR = 6", "#c4572e"), ("scr9", "random\nR = 9", "#a33a22"), ("scr12", "random\nR = 12", "#7b241c"), ("psi9", "ψ reset\nR = 9", "#5b8fc9"), ("psiscr9", "ψ + random\nR = 9", "#3b4f7a"), ("sham", "random\nelsewhere", "0.55")]
+rw = json.load(open(S + "r183/ana183.json")); rb = json.load(open(S + "r184/ana184.json")); rc = json.load(open(S + "r185/ana185.json")); rd = json.load(open(S + "r186/ana186.json"))
+for r, q, u, w in zip(rw, rb, rc, rd): r["scr9"], r["psi9"], r["amp9"], r["ampscr9"], r["all9"] = q["scr9"], u["psi"], w["amp"], w["ampscr"], w["all"]
+V = [("ctl", "unchanged", V1), ("scr", "phases\nR = 6", "#c4572e"), ("scr9", "phases\nR = 9", "#a33a22"), ("psi9", "ψ\nR = 9", "#5b8fc9"),
+     ("amp9", "|z|\nR = 9", "#8e5ea2"), ("ampscr9", "|z|+phases\nR = 9", "#6c3483"), ("all9", "all\nR = 9", "#222222")]
 for i, (v, lab, c) in enumerate(V):
     nb = sum(r[v] is not None for r in rw); dl = [r[v] - r["t_j"] for r in rw if r[v] is not None]
     ax[3].bar(i, nb, color=c); ax[3].text(i, nb + 0.8, f"{nb}\n{np.median(dl):+.0f}", ha="center", va="bottom", fontsize=8)
+nbg = sum(r.get("sham_site") is not None for r in json.load(open(S + "r183/ana183.json")))
+ax[3].axhline(nbg, color="0.5", lw=1, ls="--"); ax[3].text(len(V) - 0.5, nbg + 6.5, "background", fontsize=7, ha="right", color="0.4")
 ax[3].set_xticks(range(len(V))); ax[3].set_xticklabels([v[1] for v in V], fontsize=7); ax[3].set_ylim(0, 52); ax[3].set_ylabel("domains born at the site (of 40)")
 ax[3].set_title("(d) intervention 3 units before nucleation")
 plt.tight_layout(); import sys; sys.path.insert(0, _H); from pstyle import save; save(fig, "fig3_nucleation")
