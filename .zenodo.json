@@ -1,0 +1,10 @@
+{
+  "title": "Nul-matrix-v1: code and data for \"Self-boiling lattice of complex links: finite domains, elastic coexistence and a massless gauge mode in a 2D toy model of cosmogenesis\"",
+  "upload_type": "software",
+  "creators": [{"name": "Batrukh, Vasyl", "affiliation": "Independent researcher"}],
+  "description": "Minimal code and data to reproduce the figures and main numerical results of the preprint \"Self-boiling lattice of complex links: finite domains, elastic coexistence and a massless gauge mode in a 2D toy model of cosmogenesis\" (model v1). See README for the quick test, figure scripts and run scripts.",
+  "license": "MIT",
+  "keywords": ["pattern formation", "nucleation", "Kibble-Zurek mechanism", "phase coexistence", "lattice gauge theory", "pre-geometric models", "toy model of cosmogenesis"],
+  "language": "eng",
+  "version": "1.0"
+}
