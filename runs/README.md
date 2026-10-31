@@ -19,3 +19,4 @@ Single-threaded per run; use `xargs -P <cores>` for several seeds.
 | `island_radius.sh` | Sec. 4.2, Fig. 3d | random link phases in disks of radius 9 and 12 for the events of `island.sh` (184) |
 | `island_psi.sh` | Sec. 4.2, Fig. 3d | ψ reset to the Matrix level in a disk of radius 9, alone and with random link phases (185) |
 | `island_amp.sh` | Sec. 4.2, Fig. 3d | link intensities in a disk of radius 9 replaced by Matrix values, alone / with random phases / with phases and ψ (186) |
+| `boundary_profile.sh` | Sec. 4.1 | profile of ψ, \|z\|², \|arg P\| and tr Φ² across domain boundaries, t = 100–200 (188) |
