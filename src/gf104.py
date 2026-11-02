@@ -41,7 +41,8 @@ class GF:
 
     def plant(s, i0, j0):
         L = s.L; X, Y = PH.coords(L); _, dx, dy = M.wrapd(X, Y, X[i0, j0], Y[i0, j0], L); phi = np.arctan2(dy, dx)/2
-        w, v = np.linalg.eigh(s.P[i0, j0]); eu, ev = v[:, 2], v[:, 3]          # one u- and one v-vector
+        w, v = np.linalg.eigh(s.P[i0, j0]); k = int((w < 0).sum())             # k = 3 in vacuum +Phi*, k = 2 in vacuum -Phi*
+        eu, ev = v[:, k - 1], v[:, k]          # one u- and one v-vector: last negative and first positive eigenvector (works in both vacua; fixed in r209)
         Gm = np.outer(ev, eu) - np.outer(eu, ev)
         def R(a):
             c, sn = np.cos(a)[..., None, None], np.sin(a)[..., None, None]
