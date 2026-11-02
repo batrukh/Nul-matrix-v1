@@ -4,7 +4,7 @@ Code and data for the paper on model v1: a triangular network of complex links w
 nucleates domains ("worlds"), keeps them apart by an elastic response of the substrate, and hosts a confined massless gauge mode and
 Z₂ vortices. The paper also reports negative results (no long-range gravity, no domains in 3D), and their code is included.
 
-**Paper:** V. Batrukh, *Self-boiling lattice of complex links: finite domains, elastic coexistence and a massless gauge mode in a 2D toy model of cosmogenesis*, preprint (2026), [doi:10.5281/zenodo.23838334](https://doi.org/10.5281/zenodo.23838334).
+**Paper:** V. Batrukh, *Self-boiling lattice of complex links: finite domains, elastic coexistence and a massless gauge mode in a 2D toy model of cosmogenesis*, preprint (2026), v1.1 [doi:10.5281/zenodo.23890583](https://doi.org/10.5281/zenodo.23890583) (all versions: [doi:10.5281/zenodo.23838333](https://doi.org/10.5281/zenodo.23838333)).
 **This code (v1.1):** [doi:10.5281/zenodo.23890260](https://doi.org/10.5281/zenodo.23890260) (v1.0, as first submitted: [doi:10.5281/zenodo.23838150](https://doi.org/10.5281/zenodo.23838150)).
 
 Names of quantities in the source follow the paper.
