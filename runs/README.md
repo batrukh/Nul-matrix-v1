@@ -21,3 +21,5 @@ Single-threaded per run; use `xargs -P <cores>` for several seeds.
 | `island_amp.sh` | Sec. 4.2, Fig. 3d | link intensities in a disk of radius 9 replaced by Matrix values, alone / with random phases / with phases and ψ (186) |
 | `boundary_profile.sh` | Sec. 4.1 | profile of ψ, \|z\|², \|arg P\| and tr Φ² across domain boundaries, t = 100–200 (188) |
 | `dt_field.sh PF SEED` | Methods (time step) | the field-sector runs of `light.sh` at dt = 0.0025 to T = 200 (187) |
+| `variant.sh SEED` | Sec. 4.7 | the variant: P = 0.16 (γ = 0.0025, ℓ = 8), b = 0.1, β = 1.3, random arrows ℓ_τ = 16, T = 600, vortex planted at t = 100 (276/279) |
+| `alice.sh synthetic` / `alice.sh real SEED` | Sec. 4.7, Fig. 10 | photon packet past a gauge-planted Z₂ vortex and a control without it: uniform synthetic domain (285) or a real domain of `variant.sh` (286); sign coefficient C vs Aharonov–Bohm α = ½ |
