@@ -1,0 +1,2 @@
+{"note": "Longest Alice-vortex life per run (time units). Seeds 1-2 (T=800): cluster tracker on *_g104.json of runs/director.sh (radius 4, gaps <= 3); seeds 3-6 (T=300): src/ext/r322/ana322.py life_max.",
+ "labels": ["1 no n", "2 no n", "1 n", "2 n", "3 n", "4 n", "5 n", "6 n"], "life": [90, 105, 30, 789, 37, 73, 31, 31]}

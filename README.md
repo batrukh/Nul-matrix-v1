@@ -5,7 +5,7 @@ nucleates domains ("worlds"), keeps them apart by an elastic response of the sub
 Z₂ vortices. The paper also reports negative results (no long-range gravity, no domains in 3D), and their code is included.
 
 **Paper:** V. Batrukh, *Self-boiling lattice of complex links: finite domains, elastic coexistence and a massless gauge mode in a 2D toy model of cosmogenesis*, preprint (2026), v1.2 [doi:10.5281/zenodo.24049825](https://doi.org/10.5281/zenodo.24049825) (v1.1: [doi:10.5281/zenodo.23890583](https://doi.org/10.5281/zenodo.23890583)) (all versions: [doi:10.5281/zenodo.23838333](https://doi.org/10.5281/zenodo.23838333)).
-**This code (v1.2, adds the variant of Sec. 4.7):** [doi:10.5281/zenodo.24049546](https://doi.org/10.5281/zenodo.24049546) (v1.1: [doi:10.5281/zenodo.23890260](https://doi.org/10.5281/zenodo.23890260); v1.0, as first submitted: [doi:10.5281/zenodo.23838150](https://doi.org/10.5281/zenodo.23838150)).
+**This code (v1.3, adds the director runs of Secs. 4.8–4.9 and the scripts behind Secs. 4.7–4.10 in `src/director`, `src/ext`; v1.2 added the variant of Sec. 4.7):** DOI follows the GitHub release (v1.2: [doi:10.5281/zenodo.24049546](https://doi.org/10.5281/zenodo.24049546); v1.1: [doi:10.5281/zenodo.23890260](https://doi.org/10.5281/zenodo.23890260); v1.0, as first submitted: [doi:10.5281/zenodo.23838150](https://doi.org/10.5281/zenodo.23838150)).
 
 Names of quantities in the source follow the paper.
 
@@ -41,6 +41,10 @@ Scripts in `runs/` (see `runs/README.md`). Reference parameters of model v1: L =
 | Sec. 4.6, Fig. 7 | hole seeds a domain: R ≥ 8, q ≥ 0.3; first domain at the hole 3/3 | `runs/hole.sh 48 4.5 SEED R Q` (R = 2–12, Q = 0.05–0.9), `runs/hole.sh 72 3.5 SEED 8 0.6` | `src/ana177.py runs/out/hole_L48` | ≈ 40 min (66 runs) |
 | Sec. 4.7, Fig. 10 | variant keeps a vortex; vortex = Alice string, photon splits as AB flux ½ | `runs/variant.sh S`, `runs/alice.sh synthetic`, `runs/alice.sh real S` | `src/hol284.py`, `src/ana285.py`, `src/ana286.py`, `paper/fig10_alice.py` (data in `data/r285`, `data/r286`) | ≈ 2.5 h per seed + 20 min |
 | Sec. 4.3, Fig. 4 (Statistics) | window on 7–8 seeds; arrest vs P in v1 seed-dependent (0.3–0.6); merging is not Ostwald ripening | `runs/stats.sh TAG L S0 SEED GAMMA TT` (44 runs, header of the script) | `paper/fig9_stats.py` (data in `data/r178`) | ≈ 75 min on 4 cores |
+| Sec. 4.7 (295) | vortex moves as a relativistic particle: m ≈ 1.05 E₀, Lorentz contraction, time dilation | — | `src/ext/r291`–`r294` (as run) | — |
+| Sec. 4.8, Fig. 11 | exchange of two vortices with a live director: one odd quantum ±π/2, two quanta (one per vortex) −1 (fermion) | — | `src/ext/r313/eff.py`, `src/ext/r319`, `src/ext/r320` (relax, hess, braid), `paper/fig11_exchange.py` (data in `data/r320`) | ≈ 1 h |
+| Sec. 4.9, Fig. 12 | relics of domain birth: frozen disclinations, merger scars ×9, long-lived vortex on a disclination, slower birth → more relics | `runs/director.sh 1 800`, `runs/director.sh 2 800`, `runs/director.sh S 800 0`, `runs/director.sh 3..6` | `src/ext/r321`, `src/ext/r322` (`ana322.py`, `ana322b.py`), `paper/fig12_relics.py` (data in `data/r321`, `data/r322`) | several hours per seed at T = 800 (one core) |
+| Sec. 4.10 | order of the network: amorphous Matrix gives no worlds; defect threshold ≈ 12 %; competing threads give tetrahedra, not a lattice | — | `src/ext/r315`, `src/ext/r317`, `src/ext/r318` (as run) | — |
 | Sec. 5.1, Fig. 8a | Nordtvedt effect | — | `src/ff155.py K 0.006`, K = 0, 1, 4, 8 | — |
 | Sec. 5.2, Fig. 8b | 3D islands | `src/rg4ck.py` (3D, tetrahedral) | `src/ana170.py` | ≈ 4 h per seed (L = 24) |
 

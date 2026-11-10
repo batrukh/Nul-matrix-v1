@@ -23,3 +23,4 @@ Single-threaded per run; use `xargs -P <cores>` for several seeds.
 | `dt_field.sh PF SEED` | Methods (time step) | the field-sector runs of `light.sh` at dt = 0.0025 to T = 200 (187) |
 | `variant.sh SEED` | Sec. 4.7 | the variant: P = 0.16 (γ = 0.0025, ℓ = 8), b = 0.1, β = 1.3, random arrows ℓ_τ = 16, T = 600, vortex planted at t = 100 (276/279) |
 | `alice.sh synthetic` / `alice.sh real SEED` | Sec. 4.7, Fig. 10 | photon packet past a gauge-planted Z₂ vortex and a control without it: uniform synthetic domain (285) or a real domain of `variant.sh` (286); sign coefficient C vs Aharonov–Bohm α = ½ |
+| `director.sh SEED [T] [D]` | Sec. 4.9, Fig. 12 | the base of Sec. 4.7 with a live director n (μ = 0.03, k = 0.09), T = 800 (seeds 1–2) or 300 (seeds 3–6); D = 0 is the control without n; writes `*_dtrack.json` (disclinations, Alice vortices, domain area) and snapshots (321/322) |
