@@ -1,0 +1,20 @@
+job.sh 0 96 1 600
+job.sh 0 96 2 600
+job.sh 0 96 3 600
+job.sh 0 96 4 600
+job.sh 0.0025 96 1 600
+job.sh 0.0025 96 2 600
+job.sh 0.0025 96 3 600
+job.sh 0.0025 96 4 600
+job2.sh 3.0 1
+job2.sh 3.0 2
+job2.sh 3.0 3
+job2.sh 3.0 4
+job2.sh 4.0 1
+job2.sh 4.0 2
+job2.sh 4.0 3
+job2.sh 4.0 4
+job2.sh 4.25 1
+job2.sh 4.25 2
+job2.sh 4.25 3
+job2.sh 4.25 4
