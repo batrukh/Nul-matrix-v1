@@ -3,6 +3,8 @@
 import sys, os, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ela139 as E, local60 as M
+if os.environ.get('GNB'):            # (337) швидке numba-ядро калібрувального поля, та сама фізика до 1e-14
+    import gauge_nb; gauge_nb.install()
 kw = {}; E.GAM = 0.01; E.ELL = 8.0
 for a in sys.argv[1:]:
     k, v = a.split("=")
