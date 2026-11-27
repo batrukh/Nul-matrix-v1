@@ -1,0 +1,82 @@
+[
+ {
+  "seed": 5,
+  "ns": 1,
+  "kind": "island",
+  "size": 365,
+  "overlap": 1.0,
+  "null95": 0.466,
+  "same": true,
+  "grad_pct": 0.066
+ },
+ {
+  "seed": 5,
+  "ns": 2,
+  "kind": "island",
+  "size": 448,
+  "overlap": 0.98,
+  "null95": 0.451,
+  "same": true,
+  "grad_pct": 0.051
+ },
+ {
+  "seed": 5,
+  "ns": 3,
+  "kind": "island",
+  "size": 358,
+  "overlap": 1.0,
+  "null95": 0.483,
+  "same": true,
+  "grad_pct": 0.084
+ },
+ {
+  "seed": 5,
+  "ns": 4,
+  "kind": "island",
+  "size": 379,
+  "overlap": 1.0,
+  "null95": 0.451,
+  "same": true,
+  "grad_pct": 0.049
+ },
+ {
+  "seed": 5,
+  "ns": 5,
+  "kind": "island",
+  "size": 440,
+  "overlap": 0.95,
+  "null95": 0.457,
+  "same": true,
+  "grad_pct": 0.062
+ },
+ {
+  "seed": 5,
+  "ns": 6,
+  "kind": "island",
+  "size": 418,
+  "overlap": 0.995,
+  "null95": 0.457,
+  "same": true,
+  "grad_pct": 0.047
+ },
+ {
+  "seed": 5,
+  "ns": 7,
+  "kind": "island",
+  "size": 400,
+  "overlap": 0.988,
+  "null95": 0.468,
+  "same": true,
+  "grad_pct": 0.029
+ },
+ {
+  "seed": 5,
+  "ns": 8,
+  "kind": "island",
+  "size": 456,
+  "overlap": 0.95,
+  "null95": 0.452,
+  "same": true,
+  "grad_pct": 0.027
+ }
+]

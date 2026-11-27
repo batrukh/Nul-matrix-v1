@@ -1,0 +1,224 @@
+{
+ "L16_a0": {
+  "n": 8,
+  "worlds": 0,
+  "wilson": [
+   0.0,
+   0.32
+  ],
+  "runs": [
+   {
+    "seed": 1,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0001
+   },
+   {
+    "seed": 2,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0011
+   },
+   {
+    "seed": 3,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.001
+   },
+   {
+    "seed": 4,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.001
+   },
+   {
+    "seed": 5,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0011
+   },
+   {
+    "seed": 6,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0005
+   },
+   {
+    "seed": 7,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0003
+   },
+   {
+    "seed": 8,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0007
+   }
+  ]
+ },
+ "L24_a0.25": {
+  "n": 8,
+  "worlds": 4,
+  "wilson": [
+   0.22,
+   0.78
+  ],
+  "runs": [
+   {
+    "seed": 1,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0141
+   },
+   {
+    "seed": 2,
+    "world": true,
+    "frac": 0.0449,
+    "t_birth": 17.0,
+    "ch200_300": -0.016,
+    "A2": 3.0234
+   },
+   {
+    "seed": 3,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0181
+   },
+   {
+    "seed": 4,
+    "world": true,
+    "frac": 0.0145,
+    "t_birth": 11.0,
+    "ch200_300": -0.126,
+    "A2": 3.0115
+   },
+   {
+    "seed": 5,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0088
+   },
+   {
+    "seed": 6,
+    "world": false,
+    "frac": 0.0,
+    "t_birth": null,
+    "ch200_300": null,
+    "A2": 3.0223
+   },
+   {
+    "seed": 7,
+    "world": true,
+    "frac": 0.0514,
+    "t_birth": 12.0,
+    "ch200_300": -0.046,
+    "A2": 3.0281
+   },
+   {
+    "seed": 8,
+    "world": true,
+    "frac": 0.0655,
+    "t_birth": 13.0,
+    "ch200_300": 3.507,
+    "A2": 3.0201
+   }
+  ]
+ },
+ "L24_a0.2": {
+  "n": 8,
+  "worlds": 8,
+  "wilson": [
+   0.68,
+   1.0
+  ],
+  "runs": [
+   {
+    "seed": 1,
+    "world": true,
+    "frac": 0.1692,
+    "t_birth": 13.0,
+    "ch200_300": 0.26,
+    "A2": 3.0434
+   },
+   {
+    "seed": 2,
+    "world": true,
+    "frac": 0.8679,
+    "t_birth": 14.0,
+    "ch200_300": 0.605,
+    "A2": 3.1044
+   },
+   {
+    "seed": 3,
+    "world": true,
+    "frac": 0.8359,
+    "t_birth": 47.0,
+    "ch200_300": 0.279,
+    "A2": 3.0973
+   },
+   {
+    "seed": 4,
+    "world": true,
+    "frac": 0.1406,
+    "t_birth": 11.0,
+    "ch200_300": 1.077,
+    "A2": 3.0353
+   },
+   {
+    "seed": 5,
+    "world": true,
+    "frac": 0.1438,
+    "t_birth": 16.0,
+    "ch200_300": 0.36,
+    "A2": 3.0361
+   },
+   {
+    "seed": 6,
+    "world": true,
+    "frac": 0.8845,
+    "t_birth": 14.0,
+    "ch200_300": -0.002,
+    "A2": 3.1109
+   },
+   {
+    "seed": 7,
+    "world": true,
+    "frac": 0.8851,
+    "t_birth": 12.0,
+    "ch200_300": -0.001,
+    "A2": 3.1105
+   },
+   {
+    "seed": 8,
+    "world": true,
+    "frac": 0.8721,
+    "t_birth": 13.0,
+    "ch200_300": 0.008,
+    "A2": 3.101
+   }
+  ]
+ }
+}

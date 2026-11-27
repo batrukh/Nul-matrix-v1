@@ -1,0 +1,322 @@
+[
+ {
+  "seed": 12,
+  "ns": 1,
+  "kind": "island",
+  "size": 1138,
+  "overlap": 0.96,
+  "null95": 0.642,
+  "same": true,
+  "grad_pct": 0.986
+ },
+ {
+  "seed": 12,
+  "ns": 2,
+  "kind": "island",
+  "size": 979,
+  "overlap": 0.988,
+  "null95": 0.662,
+  "same": true,
+  "grad_pct": 0.968
+ },
+ {
+  "seed": 12,
+  "ns": 3,
+  "kind": "island",
+  "size": 1023,
+  "overlap": 0.991,
+  "null95": 0.643,
+  "same": true,
+  "grad_pct": 0.98
+ },
+ {
+  "seed": 12,
+  "ns": 4,
+  "kind": "island",
+  "size": 811,
+  "overlap": 0.999,
+  "null95": 0.657,
+  "same": true,
+  "grad_pct": 0.976
+ },
+ {
+  "seed": 12,
+  "ns": 5,
+  "kind": "island",
+  "size": 1036,
+  "overlap": 0.974,
+  "null95": 0.655,
+  "same": true,
+  "grad_pct": 0.973
+ },
+ {
+  "seed": 12,
+  "ns": 6,
+  "kind": "island",
+  "size": 953,
+  "overlap": 0.994,
+  "null95": 0.655,
+  "same": true,
+  "grad_pct": 0.972
+ },
+ {
+  "seed": 12,
+  "ns": 7,
+  "kind": "island",
+  "size": 1148,
+  "overlap": 0.944,
+  "null95": 0.658,
+  "same": true,
+  "grad_pct": 0.995
+ },
+ {
+  "seed": 12,
+  "ns": 8,
+  "kind": "island",
+  "size": 1028,
+  "overlap": 0.991,
+  "null95": 0.653,
+  "same": true,
+  "grad_pct": 0.968
+ },
+ {
+  "seed": 5,
+  "ns": 1,
+  "kind": "island",
+  "size": 433,
+  "overlap": 0.984,
+  "null95": 0.455,
+  "same": true,
+  "grad_pct": 0.041
+ },
+ {
+  "seed": 5,
+  "ns": 2,
+  "kind": "island",
+  "size": 465,
+  "overlap": 0.955,
+  "null95": 0.406,
+  "same": true,
+  "grad_pct": 0.044
+ },
+ {
+  "seed": 5,
+  "ns": 3,
+  "kind": "island",
+  "size": 389,
+  "overlap": 1.0,
+  "null95": 0.486,
+  "same": true,
+  "grad_pct": 0.057
+ },
+ {
+  "seed": 5,
+  "ns": 4,
+  "kind": "island",
+  "size": 418,
+  "overlap": 0.993,
+  "null95": 0.45,
+  "same": true,
+  "grad_pct": 0.025
+ },
+ {
+  "seed": 5,
+  "ns": 5,
+  "kind": "island",
+  "size": 390,
+  "overlap": 1.0,
+  "null95": 0.487,
+  "same": true,
+  "grad_pct": 0.05
+ },
+ {
+  "seed": 5,
+  "ns": 6,
+  "kind": "island",
+  "size": 433,
+  "overlap": 0.982,
+  "null95": 0.444,
+  "same": true,
+  "grad_pct": 0.05
+ },
+ {
+  "seed": 5,
+  "ns": 7,
+  "kind": "island",
+  "size": 432,
+  "overlap": 0.954,
+  "null95": 0.444,
+  "same": true,
+  "grad_pct": 0.056
+ },
+ {
+  "seed": 5,
+  "ns": 8,
+  "kind": "island",
+  "size": 427,
+  "overlap": 0.984,
+  "null95": 0.436,
+  "same": true,
+  "grad_pct": 0.057
+ },
+ {
+  "seed": 6,
+  "ns": 1,
+  "kind": "island",
+  "size": 1189,
+  "overlap": 0.999,
+  "null95": 0.609,
+  "same": true,
+  "grad_pct": 0.991
+ },
+ {
+  "seed": 6,
+  "ns": 2,
+  "kind": "island",
+  "size": 1155,
+  "overlap": 0.997,
+  "null95": 0.588,
+  "same": true,
+  "grad_pct": 0.994
+ },
+ {
+  "seed": 6,
+  "ns": 3,
+  "kind": "island",
+  "size": 1141,
+  "overlap": 0.998,
+  "null95": 0.584,
+  "same": true,
+  "grad_pct": 0.995
+ },
+ {
+  "seed": 6,
+  "ns": 4,
+  "kind": "island",
+  "size": 1037,
+  "overlap": 0.991,
+  "null95": 0.58,
+  "same": true,
+  "grad_pct": 0.988
+ },
+ {
+  "seed": 6,
+  "ns": 5,
+  "kind": "island",
+  "size": 932,
+  "overlap": 0.922,
+  "null95": 0.525,
+  "same": true,
+  "grad_pct": 0.977
+ },
+ {
+  "seed": 6,
+  "ns": 6,
+  "kind": "island",
+  "size": 1083,
+  "overlap": 0.993,
+  "null95": 0.592,
+  "same": true,
+  "grad_pct": 0.992
+ },
+ {
+  "seed": 6,
+  "ns": 7,
+  "kind": "island",
+  "size": 1127,
+  "overlap": 0.999,
+  "null95": 0.553,
+  "same": true,
+  "grad_pct": 0.994
+ },
+ {
+  "seed": 6,
+  "ns": 8,
+  "kind": "island",
+  "size": 984,
+  "overlap": 0.977,
+  "null95": 0.554,
+  "same": true,
+  "grad_pct": 0.974
+ },
+ {
+  "seed": 7,
+  "ns": 1,
+  "kind": "island",
+  "size": 132,
+  "overlap": 1.0,
+  "null95": 0.189,
+  "same": true,
+  "grad_pct": 0.997
+ },
+ {
+  "seed": 7,
+  "ns": 2,
+  "kind": "island",
+  "size": 137,
+  "overlap": 1.0,
+  "null95": 0.241,
+  "same": true,
+  "grad_pct": 0.998
+ },
+ {
+  "seed": 7,
+  "ns": 3,
+  "kind": "island",
+  "size": 133,
+  "overlap": 1.0,
+  "null95": 0.226,
+  "same": true,
+  "grad_pct": 0.998
+ },
+ {
+  "seed": 7,
+  "ns": 4,
+  "kind": "island",
+  "size": 147,
+  "overlap": 1.0,
+  "null95": 0.266,
+  "same": true,
+  "grad_pct": 0.997
+ },
+ {
+  "seed": 7,
+  "ns": 5,
+  "kind": "island",
+  "size": 136,
+  "overlap": 1.0,
+  "null95": 0.257,
+  "same": true,
+  "grad_pct": 0.997
+ },
+ {
+  "seed": 7,
+  "ns": 6,
+  "kind": "island",
+  "size": 141,
+  "overlap": 0.986,
+  "null95": 0.22,
+  "same": true,
+  "grad_pct": 0.998
+ },
+ {
+  "seed": 7,
+  "ns": 7,
+  "kind": "island",
+  "size": 133,
+  "overlap": 1.0,
+  "null95": 0.241,
+  "same": true,
+  "grad_pct": 0.998
+ },
+ {
+  "seed": 7,
+  "ns": 8,
+  "kind": "island",
+  "size": 145,
+  "overlap": 0.993,
+  "null95": 0.245,
+  "same": true,
+  "grad_pct": 0.998
+ }
+]

@@ -1,0 +1,337 @@
+[
+ {
+  "tag": "M_seed1",
+  "seed": 1,
+  "h": 0.36,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "M_seed11",
+  "seed": 11,
+  "h": 0.36,
+  "kind": "island",
+  "size": 1320,
+  "tau": 0.635,
+  "tau_pct": 0.235,
+  "grad": 0.401,
+  "grad_pct": 0.619,
+  "lap": 0.02,
+  "lap_pct": 0.615,
+  "overlap": {}
+ },
+ {
+  "tag": "M_seed12",
+  "seed": 12,
+  "h": 0.36,
+  "kind": "island",
+  "size": 1124,
+  "tau": -0.623,
+  "tau_pct": 0.994,
+  "grad": 0.463,
+  "grad_pct": 0.995,
+  "lap": -0.141,
+  "lap_pct": 0.007,
+  "overlap": {}
+ },
+ {
+  "tag": "M_seed13",
+  "seed": 13,
+  "h": 0.36,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "M_seed14",
+  "seed": 14,
+  "h": 0.36,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "M_seed2",
+  "seed": 2,
+  "h": 0.36,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "M_seed3",
+  "seed": 3,
+  "h": 0.36,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "M_seed5",
+  "seed": 5,
+  "h": 0.36,
+  "kind": "island",
+  "size": 478,
+  "tau": -3.167,
+  "tau_pct": 0.289,
+  "grad": 0.323,
+  "grad_pct": 0.021,
+  "lap": 0.099,
+  "lap_pct": 0.82,
+  "overlap": {
+   "h0.35_seed5": 0.92,
+   "h0.37_seed5": 0.97
+  }
+ },
+ {
+  "tag": "M_seed6",
+  "seed": 6,
+  "h": 0.36,
+  "kind": "island",
+  "size": 960,
+  "tau": 0.731,
+  "tau_pct": 0.746,
+  "grad": 0.439,
+  "grad_pct": 0.975,
+  "lap": -0.01,
+  "lap_pct": 0.438,
+  "overlap": {
+   "h0.35_seed6": 0.99,
+   "h0.37_seed6": 1.0
+  }
+ },
+ {
+  "tag": "M_seed7",
+  "seed": 7,
+  "h": 0.36,
+  "kind": "island",
+  "size": 143,
+  "tau": 1.448,
+  "tau_pct": 0.827,
+  "grad": 0.561,
+  "grad_pct": 1.0,
+  "lap": -0.098,
+  "lap_pct": 0.192,
+  "overlap": {
+   "h0.35_seed7": 1.0,
+   "h0.37_seed7": 1.0
+  }
+ },
+ {
+  "tag": "M_seed8",
+  "seed": 8,
+  "h": 0.36,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.33_seed1",
+  "seed": 1,
+  "h": 0.33,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.33_seed2",
+  "seed": 2,
+  "h": 0.33,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.33_seed3",
+  "seed": 3,
+  "h": 0.33,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.33_seed5",
+  "seed": 5,
+  "h": 0.33,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.33_seed6",
+  "seed": 6,
+  "h": 0.33,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.33_seed7",
+  "seed": 7,
+  "h": 0.33,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.33_seed8",
+  "seed": 8,
+  "h": 0.33,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.35_seed1",
+  "seed": 1,
+  "h": 0.35,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.35_seed2",
+  "seed": 2,
+  "h": 0.35,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.35_seed3",
+  "seed": 3,
+  "h": 0.35,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.35_seed5",
+  "seed": 5,
+  "h": 0.35,
+  "kind": "island",
+  "size": 478,
+  "tau": -3.295,
+  "tau_pct": 0.227,
+  "grad": 0.326,
+  "grad_pct": 0.037,
+  "lap": 0.118,
+  "lap_pct": 0.849,
+  "overlap": {
+   "M_seed5": 0.92,
+   "h0.37_seed5": 0.99
+  }
+ },
+ {
+  "tag": "h0.35_seed6",
+  "seed": 6,
+  "h": 0.35,
+  "kind": "island",
+  "size": 844,
+  "tau": 0.737,
+  "tau_pct": 0.744,
+  "grad": 0.435,
+  "grad_pct": 0.957,
+  "lap": -0.008,
+  "lap_pct": 0.454,
+  "overlap": {
+   "M_seed6": 0.99,
+   "h0.37_seed6": 1.0
+  }
+ },
+ {
+  "tag": "h0.35_seed7",
+  "seed": 7,
+  "h": 0.35,
+  "kind": "island",
+  "size": 108,
+  "tau": 1.458,
+  "tau_pct": 0.837,
+  "grad": 0.584,
+  "grad_pct": 0.999,
+  "lap": -0.096,
+  "lap_pct": 0.214,
+  "overlap": {
+   "M_seed7": 1.0,
+   "h0.37_seed7": 1.0
+  }
+ },
+ {
+  "tag": "h0.35_seed8",
+  "seed": 8,
+  "h": 0.35,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.37_seed1",
+  "seed": 1,
+  "h": 0.37,
+  "kind": "island",
+  "size": 524,
+  "tau": -3.3,
+  "tau_pct": 0.006,
+  "grad": 0.454,
+  "grad_pct": 0.988,
+  "lap": 0.192,
+  "lap_pct": 0.996,
+  "overlap": {}
+ },
+ {
+  "tag": "h0.37_seed2",
+  "seed": 2,
+  "h": 0.37,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.37_seed3",
+  "seed": 3,
+  "h": 0.37,
+  "kind": "none",
+  "frac": 0.0
+ },
+ {
+  "tag": "h0.37_seed5",
+  "seed": 5,
+  "h": 0.37,
+  "kind": "island",
+  "size": 767,
+  "tau": -3.442,
+  "tau_pct": 0.056,
+  "grad": 0.361,
+  "grad_pct": 0.147,
+  "lap": 0.129,
+  "lap_pct": 0.976,
+  "overlap": {
+   "M_seed5": 0.97,
+   "h0.35_seed5": 0.99
+  }
+ },
+ {
+  "tag": "h0.37_seed6",
+  "seed": 6,
+  "h": 0.37,
+  "kind": "island",
+  "size": 1147,
+  "tau": 0.709,
+  "tau_pct": 0.747,
+  "grad": 0.443,
+  "grad_pct": 0.993,
+  "lap": -0.009,
+  "lap_pct": 0.412,
+  "overlap": {
+   "M_seed6": 1.0,
+   "h0.35_seed6": 1.0
+  }
+ },
+ {
+  "tag": "h0.37_seed7",
+  "seed": 7,
+  "h": 0.37,
+  "kind": "island",
+  "size": 167,
+  "tau": 1.448,
+  "tau_pct": 0.841,
+  "grad": 0.547,
+  "grad_pct": 0.995,
+  "lap": -0.101,
+  "lap_pct": 0.186,
+  "overlap": {
+   "M_seed7": 1.0,
+   "h0.35_seed7": 1.0
+  }
+ },
+ {
+  "tag": "h0.37_seed8",
+  "seed": 8,
+  "h": 0.37,
+  "kind": "none",
+  "frac": 0.0
+ }
+]

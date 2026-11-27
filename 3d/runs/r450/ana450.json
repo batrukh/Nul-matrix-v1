@@ -1,0 +1,98 @@
+[
+ {
+  "seed": 1,
+  "n": 4197,
+  "world": 0.857,
+  "is_world": true,
+  "t_end": 80.0,
+  "t_birth": 22.0,
+  "defect_lat": 0.058,
+  "defect_in_world": 0.038,
+  "world_on_defects": 0.56,
+  "world_on_bcc": 0.876
+ },
+ {
+  "seed": 2,
+  "n": 4226,
+  "world": 0.85,
+  "is_world": true,
+  "t_end": 83.0,
+  "t_birth": 24.0,
+  "defect_lat": 0.0,
+  "defect_in_world": 0.0,
+  "world_on_defects": NaN,
+  "world_on_bcc": 0.85
+ },
+ {
+  "seed": 3,
+  "n": 4354,
+  "world": 0.865,
+  "is_world": true,
+  "t_end": 85.0,
+  "t_birth": 22.0,
+  "defect_lat": 0.12,
+  "defect_in_world": 0.126,
+  "world_on_defects": 0.906,
+  "world_on_bcc": 0.859
+ },
+ {
+  "seed": 4,
+  "n": 4318,
+  "world": 0.862,
+  "is_world": true,
+  "t_end": 81.0,
+  "t_birth": 23.0,
+  "defect_lat": 0.039,
+  "defect_in_world": 0.042,
+  "world_on_defects": 0.934,
+  "world_on_bcc": 0.86
+ },
+ {
+  "seed": 5,
+  "n": 4290,
+  "world": 0.857,
+  "is_world": true,
+  "t_end": 82.0,
+  "t_birth": 24.0,
+  "defect_lat": 0.034,
+  "defect_in_world": 0.026,
+  "world_on_defects": 0.66,
+  "world_on_bcc": 0.864
+ },
+ {
+  "seed": 6,
+  "n": 4279,
+  "world": 0.859,
+  "is_world": true,
+  "t_end": 80.0,
+  "t_birth": 22.0,
+  "defect_lat": 0.03,
+  "defect_in_world": 0.033,
+  "world_on_defects": 0.938,
+  "world_on_bcc": 0.857
+ },
+ {
+  "seed": 7,
+  "n": 4346,
+  "world": 0.863,
+  "is_world": true,
+  "t_end": 85.0,
+  "t_birth": 24.0,
+  "defect_lat": 0.085,
+  "defect_in_world": 0.088,
+  "world_on_defects": 0.894,
+  "world_on_bcc": 0.86
+ },
+ {
+  "seed": 8,
+  "n": 4257,
+  "world": 0.85,
+  "is_world": true,
+  "t_end": 83.0,
+  "t_birth": 23.0,
+  "defect_lat": 0.083,
+  "defect_in_world": 0.075,
+  "world_on_defects": 0.761,
+  "world_on_bcc": 0.858
+ }
+]

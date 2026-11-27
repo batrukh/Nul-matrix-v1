@@ -1,0 +1,15 @@
+"""Рис. 283: (а) (392) α 0,1, увімкнене пізно на рівноважній Матриці α0 (t100 з (373)), проти α 0,1 з нуля (373); (б) (393) світи α 0,1 після вимкнення α."""
+import json, numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
+o=json.load(open('/mnt/project-files/model/s52/r392/ana/ana392.json'))
+fig,ax=plt.subplots(1,2,figsize=(10.5,4.2))
+for i,r in enumerate(o['ref373']): ax[0].plot(r['t'],np.array(r['b'])/4096,color='#1f77b4',lw=.8,alpha=.7,label='α 0,1 з нуля (373)' if i==0 else None)
+for i,r in enumerate(o['late']): ax[0].plot(r['t'],np.array(r['b'])/4096,color='#d62728',lw=1,label='α 0,1 увімкнено пізно (392)' if i==0 else None)
+nl=sum(r['big']>=50 for r in o['late'])
+ax[0].set_xlim(0,120); ax[0].set_ylim(0,1); ax[0].set_xlabel('час від увімкнення α, од.'); ax[0].set_ylabel('найбільший світ, частка ґратки')
+ax[0].set_title(f'(а) пізнє α: світ у {nl}/8 зерен',fontsize=9); ax[0].legend(fontsize=7)
+for i,r in enumerate(o['off']): ax[1].plot(r['t'],np.array(r['b'])/4096,color='#2ca02c',lw=1,label='α → 0 після народження (393)' if i==0 else None)
+n8=sum(r['frac']>=0.8 for r in o['off'])
+ax[1].set_ylim(0,1); ax[1].set_xlabel('час від вимкнення α, од.'); ax[1].set_ylabel('найбільший світ, частка ґратки')
+ax[1].set_title(f'(б) α вимкнено: світ ≥80 % у {n8}/8 зерен',fontsize=9); ax[1].legend(fontsize=7)
+fig.suptitle('(392)–(393) Що робить хіральність α: Кун L16, s0 3,0, T300, 8 зерен',fontsize=10); fig.tight_layout()
+fig.savefig('/mnt/project-files/figures/fig283_3d_alfa_zapal.png',dpi=130)
