@@ -1,5 +1,5 @@
 {
-  "title": "Nul-matrix-v1: code and data for \"Self-boiling lattice of complex links: finite domains, elastic coexistence and a massless gauge mode in a 2D toy model of cosmogenesis\"",
+  "title": "Nul-matrix-v1: code and data for the Null Matrix papers (2D and 3D lattice models of complex phase links)",
   "upload_type": "software",
   "creators": [
     {
@@ -7,7 +7,7 @@
       "affiliation": "Independent researcher"
     }
   ],
-  "description": "Minimal code and data to reproduce the figures and main numerical results of the preprint \"Self-boiling lattice of complex links: finite domains, elastic coexistence and a massless gauge mode in a 2D toy model of cosmogenesis\" (model v1 and, from v1.2, the variant of Sec. 4.7). See README for the quick test, figure scripts and run scripts.",
+  "description": "Code and data for the preprints of the Null Matrix project. The 2D paper \"Self-boiling lattice of complex links: finite domains, elastic coexistence and a massless gauge mode in a 2D toy model of cosmogenesis\" (doi:10.5281/zenodo.23838333): directories src/, data/, paper/. The 3D paper \"Threshold, nucleation and disorder pinning in a chiral three-dimensional network of phase links with a conserved budget\" (doi:10.5281/zenodo.24599194): directory 3d/. See README for the quick test, figure scripts and run scripts.",
   "license": "MIT",
   "keywords": [
     "pattern formation",
@@ -16,7 +16,10 @@
     "phase coexistence",
     "lattice gauge theory",
     "pre-geometric models",
-    "toy model of cosmogenesis"
+    "toy model of cosmogenesis",
+    "non-reciprocal dynamics",
+    "quenched disorder",
+    "Adler equation"
   ],
   "language": "eng"
 }
