@@ -1,0 +1,87 @@
+{
+ "1": {
+  "big300": 0,
+  "big600": 0,
+  "frac600": 0.0,
+  "ratio": null,
+  "rhoM": 3.015,
+  "rhoM_minus_s0": 0.015,
+  "island": false,
+  "box_flag": false
+ },
+ "2": {
+  "big300": 621,
+  "big600": 657,
+  "frac600": 0.0475,
+  "ratio": 1.058,
+  "rhoM": 2.953,
+  "rhoM_minus_s0": -0.047,
+  "island": true,
+  "box_flag": false
+ },
+ "3": {
+  "big300": 0,
+  "big600": 0,
+  "frac600": 0.0,
+  "ratio": null,
+  "rhoM": 3.018,
+  "rhoM_minus_s0": 0.018,
+  "island": false,
+  "box_flag": false
+ },
+ "4": {
+  "big300": 201,
+  "big600": 191,
+  "frac600": 0.0138,
+  "ratio": 0.95,
+  "rhoM": 2.99,
+  "rhoM_minus_s0": -0.01,
+  "island": true,
+  "box_flag": false
+ },
+ "5": {
+  "big300": 0,
+  "big600": 0,
+  "frac600": 0.0,
+  "ratio": null,
+  "rhoM": 3.008,
+  "rhoM_minus_s0": 0.008,
+  "island": false,
+  "box_flag": false
+ },
+ "6": {
+  "big300": 0,
+  "big600": 0,
+  "frac600": 0.0,
+  "ratio": null,
+  "rhoM": 3.022,
+  "rhoM_minus_s0": 0.022,
+  "island": false,
+  "box_flag": false
+ },
+ "7": {
+  "big300": 711,
+  "big600": 716,
+  "frac600": 0.0518,
+  "ratio": 1.007,
+  "rhoM": 2.954,
+  "rhoM_minus_s0": -0.046,
+  "island": true,
+  "box_flag": false
+ },
+ "8": {
+  "big300": 906,
+  "big600": 1022,
+  "frac600": 0.0739,
+  "ratio": 1.128,
+  "rhoM": 2.913,
+  "rhoM_minus_s0": -0.087,
+  "island": true,
+  "box_flag": false
+ },
+ "_": {
+  "islands": 4,
+  "n": 8,
+  "verdict": "на L24 острови є і при h 0,30"
+ }
+}

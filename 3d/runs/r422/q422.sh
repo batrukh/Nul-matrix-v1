@@ -1,0 +1,1 @@
+cd /mnt/project-files/model/s52/r422; (for a in 0.0 0.1; do for s in 1 2 3 4 5 6 7 8; do echo 16 3.0 $s $a 8; done; done) | xargs -P4 -L1 env OMP_NUM_THREADS=1 python3 -B lin422.py >> q422.log 2>&1; touch A.done
